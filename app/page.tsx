@@ -492,10 +492,10 @@ export default function BodyAPKPage() {
 
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Video Column */}
-            <div>
+            <div className="max-w-sm">
               <div className="relative w-full rounded-lg overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
                 <iframe
-                  src="https://player.vimeo.com/video/1162594482?badge=0&autopause=0&player_id=0&app_id=58479&texttrack=nl"
+                  src="https://player.vimeo.com/video/1162594482?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&texttrack=nl"
                   frameBorder="0"
                   allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                   referrerPolicy="strict-origin-when-cross-origin"
