@@ -485,9 +485,59 @@ export default function BodyAPKPage() {
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* WHO IS IT FOR SECTION */}
+        {/* COACH INTRODUCTION SECTION */}
         {/* ================================================================ */}
         <SectionWrapper>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">Wie begeleidt de Body-APK?</h2>
+
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            {/* Video Column */}
+            <div>
+              <div className="relative w-full rounded-lg overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
+                <iframe
+                  src="https://player.vimeo.com/video/1162594482?badge=0&autopause=0&player_id=0&app_id=58479&texttrack=nl"
+                  frameBorder="0"
+                  allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  title="Body APK intro - Jari stelt zich voor"
+                />
+              </div>
+              <p className="text-sm text-gray-500 mt-4">
+                In deze video stelt Jari zich voor en zie je hoe een Body-APK in de praktijk verloopt.
+              </p>
+            </div>
+
+            {/* Text Column */}
+            <div>
+              <h3 className="text-2xl md:text-3xl font-semibold mb-6">
+                De Body-APK wordt begeleid door Jari.
+              </h3>
+
+              <div className="space-y-4 text-gray-600 leading-relaxed">
+                <p>
+                  Jari is coach bij CrossFit Leiden en gespecialiseerd in houding, ademhaling en bewegingsanalyse.
+                  Tijdens de Body-APK kijkt hij niet alleen naar waar je klachten voelt, maar vooral naar hoe je lichaam als geheel beweegt en samenwerkt.
+                </p>
+
+                <p>
+                  Zonder haast. Zonder oordeel.
+                </p>
+
+                <p>
+                  Het doel is niet om iets meteen te &quot;fixen&quot;, maar om te begrijpen wat er speelt.
+                  Soms betekent dat trainen. Soms juist even niet.
+                  Je krijgt een eerlijk en helder beeld van wat logisch is als volgende stap.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SectionWrapper>
+
+        {/* ================================================================ */}
+        {/* WHO IS IT FOR SECTION */}
+        {/* ================================================================ */}
+        <SectionWrapper className="bg-gray-50">
           <h2 className="text-3xl md:text-4xl font-bold mb-12">Voor wie is dit bedoeld?</h2>
 
           <div className="grid md:grid-cols-2 gap-8">
