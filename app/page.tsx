@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import Script from 'next/script';
 
 // ============================================================================
 // TRACKING UTILITIES
@@ -13,23 +13,6 @@ declare global {
     gtag?: (...args: unknown[]) => void;
   }
 }
-
-const trackLead = () => {
-  // GA4 DataLayer
-  if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({ event: 'lead' });
-  }
-
-  // Meta Pixel
-  if (typeof window !== 'undefined' && window.fbq) {
-    window.fbq('track', 'Lead');
-  }
-
-  // GA4 gtag
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'generate_lead');
-  }
-};
 
 const trackCTAClick = (location: string) => {
   if (typeof window !== 'undefined' && window.dataLayer) {
@@ -49,6 +32,12 @@ const CheckIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 20 20" fill="currentColor">
     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+  </svg>
+);
+
+const CloseIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -123,24 +112,37 @@ const ClipboardIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   </svg>
 );
 
+const PhoneIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+  </svg>
+);
+
+const LocationIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <path d="M10 18s-7-5.686-7-10a7 7 0 1114 0c0 4.314-7 10-7 10z" />
+    <circle cx="10" cy="8" r="2" />
+  </svg>
+);
+
 // ============================================================================
 // COMPONENTS
 // ============================================================================
 
 const CTAButton = ({
   children,
-  href,
+  onClick,
   variant = 'primary',
   className = '',
   location = 'unknown'
 }: {
   children: React.ReactNode;
-  href: string;
+  onClick: () => void;
   variant?: 'primary' | 'secondary' | 'text';
   className?: string;
   location?: string;
 }) => {
-  const baseStyles = "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyles = "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
 
   const variants = {
     primary: "bg-[#EF4C37] text-white px-8 py-4 rounded hover:bg-[#d9442f] focus:ring-[#EF4C37]",
@@ -150,16 +152,17 @@ const CTAButton = ({
 
   const handleClick = () => {
     trackCTAClick(location);
+    onClick();
   };
 
   return (
-    <a
-      href={href}
+    <button
+      type="button"
       className={`${baseStyles} ${variants[variant]} ${className}`}
       onClick={handleClick}
     >
       {children}
-    </a>
+    </button>
   );
 };
 
@@ -209,278 +212,122 @@ const FAQItem = ({
 };
 
 // ============================================================================
-// FORM COMPONENT
+// MODAL COMPONENT
 // ============================================================================
 
-type FormData = {
-  voornaam: string;
-  achternaam: string;
-  email: string;
-  telefoon: string;
-  klacht: string;
-  toelichting: string;
-  consent: boolean;
-};
-
-type FormErrors = Partial<Record<keyof FormData, string>>;
-
-const LeadForm = () => {
-  const [formData, setFormData] = useState<FormData>({
-    voornaam: '',
-    achternaam: '',
-    email: '',
-    telefoon: '',
-    klacht: '',
-    toelichting: '',
-    consent: false
-  });
-
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-
-  const klachtOptions = [
-    { value: '', label: 'Selecteer je situatie' },
-    { value: 'rug', label: 'Rug' },
-    { value: 'nek-schouder', label: 'Nek / Schouder' },
-    { value: 'heup-knie', label: 'Heup / Knie' },
-    { value: 'anders', label: 'Anders' },
-    { value: 'preventief', label: 'Preventief (geen klachten)' }
-  ];
-
-  const validate = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.voornaam.trim()) newErrors.voornaam = 'Voornaam is verplicht';
-    if (!formData.achternaam.trim()) newErrors.achternaam = 'Achternaam is verplicht';
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is verplicht';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Vul een geldig emailadres in';
+const FormModal = ({
+  isOpen,
+  onClose
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
-    if (!formData.telefoon.trim()) newErrors.telefoon = 'Telefoonnummer is verplicht';
-    if (!formData.klacht) newErrors.klacht = 'Selecteer je situatie';
-    if (!formData.consent) newErrors.consent = 'Je moet akkoord gaan met de privacyvoorwaarden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setSubmitError('');
-
-    if (!validate()) return;
-
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      if (!response.ok) throw new Error('Submission failed');
-
-      trackLead();
-      setIsSuccess(true);
-    } catch {
-      setSubmitError('Er ging iets mis. Probeer het opnieuw of neem direct contact met ons op.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const inputClasses = (hasError: boolean) =>
-    `w-full px-4 py-3 border rounded transition-colors focus:outline-none focus:ring-2 focus:ring-[#EF4C37] ${
-      hasError ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-gray-400'
-    }`;
-
-  if (isSuccess) {
-    return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckIcon className="w-8 h-8 text-green-600" />
-        </div>
-        <h3 className="text-xl font-semibold text-green-800 mb-2">Bedankt!</h3>
-        <p className="text-green-700">We nemen binnen 1 werkdag contact met je op.</p>
-      </div>
-    );
-  }
+  if (!isOpen) return null;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-      <div className="grid md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="voornaam" className="block text-sm font-medium mb-2">
-            Voornaam <span className="text-[#EF4C37]">*</span>
-          </label>
-          <input
-            type="text"
-            id="voornaam"
-            name="voornaam"
-            value={formData.voornaam}
-            onChange={(e) => setFormData({ ...formData, voornaam: e.target.value })}
-            className={inputClasses(!!errors.voornaam)}
-            aria-invalid={!!errors.voornaam}
-            aria-describedby={errors.voornaam ? 'voornaam-error' : undefined}
-          />
-          {errors.voornaam && (
-            <p id="voornaam-error" className="text-red-600 text-sm mt-1">{errors.voornaam}</p>
-          )}
-        </div>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
 
-        <div>
-          <label htmlFor="achternaam" className="block text-sm font-medium mb-2">
-            Achternaam <span className="text-[#EF4C37]">*</span>
-          </label>
-          <input
-            type="text"
-            id="achternaam"
-            name="achternaam"
-            value={formData.achternaam}
-            onChange={(e) => setFormData({ ...formData, achternaam: e.target.value })}
-            className={inputClasses(!!errors.achternaam)}
-            aria-invalid={!!errors.achternaam}
-            aria-describedby={errors.achternaam ? 'achternaam-error' : undefined}
-          />
-          {errors.achternaam && (
-            <p id="achternaam-error" className="text-red-600 text-sm mt-1">{errors.achternaam}</p>
-          )}
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email <span className="text-[#EF4C37]">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className={inputClasses(!!errors.email)}
-            aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? 'email-error' : undefined}
-          />
-          {errors.email && (
-            <p id="email-error" className="text-red-600 text-sm mt-1">{errors.email}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="telefoon" className="block text-sm font-medium mb-2">
-            Telefoon <span className="text-[#EF4C37]">*</span>
-          </label>
-          <input
-            type="tel"
-            id="telefoon"
-            name="telefoon"
-            value={formData.telefoon}
-            onChange={(e) => setFormData({ ...formData, telefoon: e.target.value })}
-            className={inputClasses(!!errors.telefoon)}
-            aria-invalid={!!errors.telefoon}
-            aria-describedby={errors.telefoon ? 'telefoon-error' : undefined}
-          />
-          {errors.telefoon && (
-            <p id="telefoon-error" className="text-red-600 text-sm mt-1">{errors.telefoon}</p>
-          )}
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="klacht" className="block text-sm font-medium mb-2">
-          Waar gaat het om? <span className="text-[#EF4C37]">*</span>
-        </label>
-        <select
-          id="klacht"
-          name="klacht"
-          value={formData.klacht}
-          onChange={(e) => setFormData({ ...formData, klacht: e.target.value })}
-          className={inputClasses(!!errors.klacht)}
-          aria-invalid={!!errors.klacht}
-          aria-describedby={errors.klacht ? 'klacht-error' : undefined}
+      {/* Modal */}
+      <div className="relative bg-white rounded-lg shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          aria-label="Sluiten"
         >
-          {klachtOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        {errors.klacht && (
-          <p id="klacht-error" className="text-red-600 text-sm mt-1">{errors.klacht}</p>
-        )}
-      </div>
+          <CloseIcon />
+        </button>
 
-      <div>
-        <label htmlFor="toelichting" className="block text-sm font-medium mb-2">
-          Korte toelichting <span className="text-gray-400">(optioneel)</span>
-        </label>
-        <textarea
-          id="toelichting"
-          name="toelichting"
-          rows={3}
-          value={formData.toelichting}
-          onChange={(e) => setFormData({ ...formData, toelichting: e.target.value })}
-          className={inputClasses(false)}
-          placeholder="Vertel kort wat je ervaart of wat je doel is..."
-        />
-      </div>
+        {/* Content */}
+        <div className="p-6 md:p-8">
+          <h2 className="text-2xl font-bold mb-2">Plan je Body-APK</h2>
+          <p className="text-gray-600 mb-6">
+            Laat je gegevens achter. Daarna plan je direct een kort telefoongesprek (5-10 min).
+          </p>
 
-      <div className="flex items-start gap-3">
-        <input
-          type="checkbox"
-          id="consent"
-          name="consent"
-          checked={formData.consent}
-          onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-          className="mt-1 w-5 h-5 rounded border-gray-300 text-[#EF4C37] focus:ring-[#EF4C37]"
-          aria-invalid={!!errors.consent}
-          aria-describedby={errors.consent ? 'consent-error' : undefined}
-        />
-        <label htmlFor="consent" className="text-sm text-gray-600">
-          Ik ga akkoord met de{' '}
-          <a href="/privacy" className="text-[#EF4C37] hover:underline" target="_blank" rel="noopener noreferrer">
-            privacyvoorwaarden
-          </a>
-          . <span className="text-[#EF4C37]">*</span>
-        </label>
-      </div>
-      {errors.consent && (
-        <p id="consent-error" className="text-red-600 text-sm -mt-4">{errors.consent}</p>
-      )}
-
-      {submitError && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-          {submitError}
+          {/* HighLevel Form Embed */}
+          <div className="min-h-[500px]">
+            <iframe
+              src="https://links.gymops.nl/widget/form/1d5IBAx42RiZJVuf5jqr"
+              style={{ width: '100%', height: '500px', border: 'none', borderRadius: '3px' }}
+              id="inline-1d5IBAx42RiZJVuf5jqr"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Website Form - Body APK Landingspagina"
+              data-height="492"
+              data-layout-iframe-id="inline-1d5IBAx42RiZJVuf5jqr"
+              data-form-id="1d5IBAx42RiZJVuf5jqr"
+              title="Website Form - Body APK Landingspagina"
+            />
+          </div>
         </div>
-      )}
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-[#EF4C37] text-white px-8 py-4 rounded font-medium text-lg transition-all duration-200 hover:bg-[#d9442f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EF4C37] disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isSubmitting ? 'Bezig met versturen...' : 'Plan mijn Body-APK'}
-      </button>
-    </form>
+      </div>
+    </div>
   );
 };
+
+// ============================================================================
+// VIDEO TESTIMONIAL COMPONENT
+// ============================================================================
+
+const VideoTestimonial = ({ videoId, title }: { videoId: string; title: string }) => (
+  <div className="relative w-full" style={{ paddingTop: '177.78%' }}>
+    <iframe
+      src={`https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`}
+      frameBorder="0"
+      allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+      referrerPolicy="strict-origin-when-cross-origin"
+      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+      title={title}
+    />
+  </div>
+);
 
 // ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
 
 export default function BodyAPKPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <>
+      {/* Vimeo Player Script */}
+      <Script src="https://player.vimeo.com/api/player.js" strategy="lazyOnload" />
+
+      {/* HighLevel Form Script */}
+      <Script src="https://links.gymops.nl/js/form_embed.js" strategy="lazyOnload" />
+
+      {/* Form Modal */}
+      <FormModal isOpen={isModalOpen} onClose={closeModal} />
+
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden z-50">
-        <CTAButton href="#form" variant="primary" className="w-full text-center" location="sticky-mobile">
+        <CTAButton onClick={openModal} variant="primary" className="w-full text-center" location="sticky-mobile">
           Plan mijn Body-APK
         </CTAButton>
       </div>
@@ -527,7 +374,7 @@ export default function BodyAPKPage() {
                 </ul>
 
                 <div className="space-y-4">
-                  <CTAButton href="#form" variant="primary" className="text-lg" location="hero">
+                  <CTAButton onClick={openModal} variant="primary" className="text-lg" location="hero">
                     Plan mijn Body-APK
                   </CTAButton>
                   <p className="text-sm text-gray-500">
@@ -535,49 +382,37 @@ export default function BodyAPKPage() {
                   </p>
                 </div>
 
-                <p className="text-sm text-gray-400 mt-12 border-t border-gray-100 pt-6">
-                  Persoonlijk. Rustig uitgelegd. Zonder medische claims.
-                </p>
+                {/* Social Proof */}
+                <div className="flex flex-wrap items-center gap-4 md:gap-6 mt-8 pt-6 border-t border-gray-100 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <div className="flex text-[#F7CB15]">
+                      <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
+                    </div>
+                    <span>270+ Google reviews</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <UsersIcon className="w-5 h-5 text-[#7B6D8D]" />
+                    <span>400+ leden bij CrossFit Leiden</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HeartIcon className="w-5 h-5 text-[#EF4C37]" />
+                    <span>Warmste community in Leiden</span>
+                  </div>
+                </div>
               </div>
 
               <div className="relative">
                 <div className="aspect-[4/5] bg-gray-100 rounded-lg overflow-hidden relative">
-                  <Image
-                    src="/images/body-apk-hero.jpg"
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://oehoqgwhk6gydfz3.public.blob.vercel-storage.com/pictures/Scherm%C2%ADafbeelding%202026-02-06%20om%2017.01.53.png"
                     alt="Body-APK sessie bij CrossFit Leiden"
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover w-full h-full"
                   />
                   {/* Decorative accent */}
                   <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#F7CB15] rounded opacity-80 -z-10" />
                   <div className="absolute -top-4 -left-4 w-16 h-16 bg-[#0CBABA] rounded opacity-60 -z-10" />
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ================================================================ */}
-        {/* TRUST STRIP */}
-        {/* ================================================================ */}
-        <section className="bg-gray-50 py-8 border-y border-gray-100">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-16 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <div className="flex text-[#F7CB15]">
-                  <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
-                </div>
-                <span>4.8/5 Google reviews</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <UsersIcon className="w-5 h-5 text-[#7B6D8D]" />
-                <span>400+ members bij CFL</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <HeartIcon className="w-5 h-5 text-[#EF4C37]" />
-                <span>Warmste community in Leiden</span>
               </div>
             </div>
           </div>
@@ -605,7 +440,7 @@ export default function BodyAPKPage() {
               ))}
             </ul>
 
-            <CTAButton href="#form" variant="text" location="problem-section">
+            <CTAButton onClick={openModal} variant="text" location="problem-section">
               Ja, dit herken ik → plan mijn Body-APK
             </CTAButton>
           </div>
@@ -700,7 +535,7 @@ export default function BodyAPKPage() {
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* PROCESS SECTION */}
+        {/* PROCESS SECTION - UPDATED */}
         {/* ================================================================ */}
         <SectionWrapper className="bg-black text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-12">Zo verloopt het</h2>
@@ -709,21 +544,24 @@ export default function BodyAPKPage() {
             {[
               {
                 step: '1',
-                title: 'Vooraf',
-                description: 'Je vult een korte vragenlijst in over slaap, stress, lifestyle en trainingsgeschiedenis. Zo kunnen we gericht starten.',
-                color: 'bg-[#F7CB15]'
+                title: 'Kennismaking (telefonisch)',
+                description: 'We starten met een kort telefoongesprek van 5-10 minuten. We bespreken je klacht of vraag en plannen samen de analyse in.',
+                color: 'bg-[#F7CB15]',
+                icon: <PhoneIcon className="w-5 h-5" />
               },
               {
                 step: '2',
-                title: 'Tijdens',
-                description: 'We analyseren je ademhaling, houding en loop- of renpatroon. We doen alleen tests die passen bij jouw situatie en belastbaarheid.',
-                color: 'bg-[#0CBABA]'
+                title: 'Analyse in de gym',
+                description: 'Tijdens de Body-APK analyseren we je houding, ademhaling en beweging (lopen of rennen) in slow motion. Alles afgestemd op jouw belastbaarheid.',
+                color: 'bg-[#0CBABA]',
+                icon: <LocationIcon className="w-5 h-5" />
               },
               {
                 step: '3',
-                title: 'Na afloop',
-                description: "Je krijgt video's, foto's en een korte uitleg. Plus een samenvatting met de belangrijkste bevindingen en vervolgstappen.",
-                color: 'bg-[#EF4C37]'
+                title: 'Uitleg en vervolgstap',
+                description: 'Je krijgt beelden, uitleg en een heldere samenvatting. Geen verplicht vervolg, wel duidelijkheid over wat logisch is om te doen.',
+                color: 'bg-[#EF4C37]',
+                icon: <FileIcon className="w-5 h-5" />
               }
             ].map((item, index) => (
               <div key={index} className="relative">
@@ -736,46 +574,31 @@ export default function BodyAPKPage() {
             ))}
           </div>
 
-          <p className="text-gray-400 text-sm mt-12 pt-8 border-t border-gray-800">
-            We doen alleen wat past bij jouw belastbaarheid.
-          </p>
-
           <div className="mt-12">
-            <CTAButton href="#form" variant="primary" location="process-section">
+            <CTAButton onClick={openModal} variant="primary" location="process-section">
               Plan mijn Body-APK
             </CTAButton>
           </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* WHAT YOU GET SECTION */}
+        {/* WHAT YOU GET SECTION - UPDATED */}
         {/* ================================================================ */}
         <SectionWrapper>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">Wat krijg je mee naar huis?</h2>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
-            <ul className="space-y-4">
-              {[
-                { icon: <VideoIcon className="w-6 h-6" />, text: 'Slow-motion video\'s (lopen of rennen)' },
-                { icon: <CameraIcon className="w-6 h-6" />, text: 'Houdingsfoto\'s' }
-              ].map((item, index) => (
-                <li key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                  <span className="text-[#0CBABA]">{item.icon}</span>
-                  <span className="text-lg">{item.text}</span>
-                </li>
-              ))}
-            </ul>
-            <ul className="space-y-4">
-              {[
-                { icon: <FileIcon className="w-6 h-6" />, text: 'Uitlegvideo met tekeningen' },
-                { icon: <ClipboardIcon className="w-6 h-6" />, text: 'Kort rapport: samenvatting, oorzaken, vervolgstappen' }
-              ].map((item, index) => (
-                <li key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                  <span className="text-[#0CBABA]">{item.icon}</span>
-                  <span className="text-lg">{item.text}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl">
+            {[
+              { icon: <VideoIcon className="w-6 h-6" />, text: "Slow-motion video's (lopen of rennen)" },
+              { icon: <CameraIcon className="w-6 h-6" />, text: "Houdingsfoto's" },
+              { icon: <VideoIcon className="w-6 h-6" />, text: 'Korte uitlegvideo' },
+              { icon: <ClipboardIcon className="w-6 h-6" />, text: 'Beknopte samenvatting met inzichten en vervolgstappen' }
+            ].map((item, index) => (
+              <div key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
+                <span className="text-[#0CBABA]">{item.icon}</span>
+                <span className="text-lg">{item.text}</span>
+              </div>
+            ))}
           </div>
 
           <p className="text-gray-500 mt-8 text-lg">Geen dik rapport. Wel duidelijkheid.</p>
@@ -824,9 +647,31 @@ export default function BodyAPKPage() {
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* NEXT STEPS SECTION */}
+        {/* TESTIMONIALS SECTION - NEW */}
         {/* ================================================================ */}
         <SectionWrapper>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ervaringen van anderen</h2>
+          <p className="text-xl text-gray-600 mb-12">
+            Mensen die de Body-APK deden vertellen wat het hen heeft opgeleverd.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="rounded-lg overflow-hidden bg-gray-100">
+              <VideoTestimonial videoId="1162593462" title="Ervaring Body-APK 1" />
+            </div>
+            <div className="rounded-lg overflow-hidden bg-gray-100">
+              <VideoTestimonial videoId="1162592944" title="Ervaring Body-APK 2" />
+            </div>
+            <div className="rounded-lg overflow-hidden bg-gray-100">
+              <VideoTestimonial videoId="1162593587" title="Chantall - member story" />
+            </div>
+          </div>
+        </SectionWrapper>
+
+        {/* ================================================================ */}
+        {/* NEXT STEPS SECTION */}
+        {/* ================================================================ */}
+        <SectionWrapper className="bg-gray-50">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">En wat nu?</h2>
             <p className="text-xl text-gray-600 mb-8">
@@ -851,7 +696,7 @@ export default function BodyAPKPage() {
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
+            <div className="bg-white p-6 rounded-lg">
               <p className="text-gray-600">
                 <strong className="text-black">Geen verplicht vervolg.</strong> Als je wél verder wilt:
                 een persoonlijke route die past bij jouw lijf.
@@ -863,7 +708,7 @@ export default function BodyAPKPage() {
         {/* ================================================================ */}
         {/* FAQ SECTION */}
         {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
+        <SectionWrapper>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">Veelgestelde vragen</h2>
 
           <div className="max-w-3xl">
@@ -893,38 +738,36 @@ export default function BodyAPKPage() {
             />
             <FAQItem
               question="Waar vindt het plaats?"
-              answer="Bij CrossFit Leiden, Langegracht 70, 2312 NV Leiden. Makkelijk bereikbaar met de auto en openbaar vervoer."
+              answer="Bij CrossFit Leiden, Marie Diebenplaats 108, 2324 NG Leiden. Makkelijk bereikbaar met de auto en openbaar vervoer."
             />
           </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* FORM SECTION */}
+        {/* FINAL CTA SECTION */}
         {/* ================================================================ */}
-        <SectionWrapper id="form" className="bg-white">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Plan je Body-APK</h2>
-              <p className="text-xl text-gray-600">
-                Laat je gegevens achter. We nemen contact op om de afspraak te plannen.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 p-8 md:p-12 rounded-lg">
-              <LeadForm />
-            </div>
+        <SectionWrapper className="bg-black text-white">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Klaar om te starten?</h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Begin met een kort telefoongesprek. We bespreken je situatie en plannen samen de analyse in.
+            </p>
+            <CTAButton onClick={openModal} variant="primary" className="text-lg" location="final-cta">
+              Plan mijn Body-APK
+            </CTAButton>
           </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* FOOTER */}
+        {/* FOOTER - UPDATED ADDRESS */}
         {/* ================================================================ */}
-        <footer className="bg-black text-white py-12">
+        <footer className="bg-black text-white py-12 border-t border-gray-800">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div className="text-center md:text-left">
                 <p className="font-semibold text-lg">CrossFit Leiden</p>
-                <p className="text-gray-400">Langegracht 70, 2312 NV Leiden</p>
+                <p className="text-gray-400">Marie Diebenplaats 108</p>
+                <p className="text-gray-400">2324 NG Leiden</p>
               </div>
 
               <div className="flex items-center gap-6 text-sm text-gray-400">
