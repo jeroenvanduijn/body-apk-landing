@@ -187,7 +187,7 @@ const FAQItem = ({
   answer
 }: {
   question: string;
-  answer: string;
+  answer: React.ReactNode;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -202,10 +202,10 @@ const FAQItem = ({
         <ChevronDownIcon className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       <div
-        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'}`}
+        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[500px] pb-6' : 'max-h-0'}`}
         aria-hidden={!isOpen}
       >
-        <p className="text-gray-600 leading-relaxed">{answer}</p>
+        <div className="text-gray-600 leading-relaxed">{answer}</div>
       </div>
     </div>
   );
@@ -305,6 +305,30 @@ const VideoTestimonial = ({ videoId, title }: { videoId: string; title: string }
 );
 
 // ============================================================================
+// MEMBER STORY COMPONENT
+// ============================================================================
+
+const MemberStory = ({
+  videoId,
+  name,
+  problem
+}: {
+  videoId: string;
+  name: string;
+  problem: string;
+}) => (
+  <div className="max-w-sm">
+    <div className="rounded-lg overflow-hidden bg-gray-100">
+      <VideoTestimonial videoId={videoId} title={`${name} - ${problem}`} />
+    </div>
+    <div className="mt-4">
+      <p className="font-semibold text-lg">{name}</p>
+      <p className="text-gray-500">{problem}</p>
+    </div>
+  </div>
+);
+
+// ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
 
@@ -328,7 +352,7 @@ export default function BodyAPKPage() {
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden z-50">
         <CTAButton onClick={openModal} variant="primary" className="w-full text-center" location="sticky-mobile">
-          Plan mijn Body-APK
+          Plan een belafspraak
         </CTAButton>
       </div>
 
@@ -352,30 +376,19 @@ export default function BodyAPKPage() {
             <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
               <div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                  Body-APK: diepgaande houding- en bewegingsanalyse
+                  Je auto laat je keuren. Je lichaam niet?
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-600 mb-8">
-                  Begrijp waar je klachten écht vandaan komen. Eerst helderheid, daarna pas een plan.
+                  De Body-APK laat je letterlijk zien waar je lichaam compenseert. Geen giswerk. Geen standaard oefeningen. Wel antwoorden.
                 </p>
 
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <ClockIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
-                    <span className="text-lg">1-op-1 sessie van 60 tot 90 minuten</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <EyeIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
-                    <span className="text-lg">Houding, ademhaling, lopen of rennen in slow motion</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <FileIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
-                    <span className="text-lg">Je gaat naar huis met beelden, samenvatting en een duidelijke vervolgstap</span>
-                  </li>
-                </ul>
+                <p className="text-lg text-gray-600 mb-8">
+                  Dit is geen training en geen fysiotherapie. Het is een diepgaande analyse van je houding, ademhaling en beweging in slow motion. Zodat je eindelijk snapt waarom die klacht blijft terugkomen.
+                </p>
 
                 <div className="space-y-4">
                   <CTAButton onClick={openModal} variant="primary" className="text-lg" location="hero">
-                    Plan mijn Body-APK
+                    Plan een belafspraak
                   </CTAButton>
                   <p className="text-sm text-gray-500">
                     Geen lidmaatschap nodig. Geen verplicht vervolg.
@@ -419,19 +432,18 @@ export default function BodyAPKPage() {
         </section>
 
         {/* ================================================================ */}
-        {/* PROBLEM SECTION */}
+        {/* PROBLEM RECOGNITION SECTION */}
         {/* ================================================================ */}
-        <SectionWrapper>
+        <SectionWrapper className="bg-gray-50">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">Herken je dit?</h2>
 
             <ul className="space-y-4 mb-10">
               {[
-                'Terugkerende rugklachten',
-                'Stijve nek of schouders',
-                'Spit dat blijft terugkomen',
-                "Je lichaam voelt 'vast' door veel zitten",
-                'Je sport, maar dezelfde blessure blijft terugkomen'
+                'Het schiet in je rug bij een kleine beweging',
+                'Je voelt dat je houding niet klopt, maar je weet niet wat je moet doen',
+                'Je sport, maar dezelfde rugklacht blijft terugkomen',
+                'Je denkt: dit hoort vast bij het ouder worden'
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-3 text-lg">
                   <span className="w-2 h-2 bg-[#EF4C37] rounded-full mt-2.5 flex-shrink-0" />
@@ -441,46 +453,51 @@ export default function BodyAPKPage() {
             </ul>
 
             <CTAButton onClick={openModal} variant="text" location="problem-section">
-              Ja, dit herken ik → plan mijn Body-APK
+              Ja, dit herken ik
             </CTAButton>
           </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* WHAT IS IT SECTION */}
+        {/* MEMBER STORY 1 - CHANTAL */}
+        {/* ================================================================ */}
+        <SectionWrapper>
+          <p className="text-xl text-gray-600 mb-8">Dit is geen uitzondering.</p>
+
+          {/* VIDEO PLACEHOLDER - Chantal */}
+          <MemberStory
+            videoId="1162593587"
+            name="Chantal"
+            problem="Rugklachten"
+          />
+        </SectionWrapper>
+
+        {/* ================================================================ */}
+        {/* WHAT IS THE BODY-APK */}
         {/* ================================================================ */}
         <SectionWrapper className="bg-gray-50">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Wat is de Body-APK?</h2>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl">
-            De Body-APK is geen training, geen fysiotherapie en geen standaard intake. Het is een beslismoment.
-            We nemen de tijd om te kijken, te testen en te begrijpen wat er speelt. Zodat je daarna wéét
-            wat de volgende stap is.
-          </p>
+          <div className="max-w-3xl">
+            <p className="text-xl text-gray-600 mb-6">
+              Een diepgaande lichaamsanalyse waarbij we kijken naar:
+            </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <EyeIcon className="w-8 h-8" />,
-                title: 'Het hele systeem',
-                text: 'We kijken naar het hele systeem, niet één plek.'
-              },
-              {
-                icon: <ClipboardIcon className="w-8 h-8" />,
-                title: 'Patronen en compensaties',
-                text: 'We zoeken compensaties en patronen die je misschien nooit opvielen.'
-              },
-              {
-                icon: <CheckIcon className="w-8 h-8" />,
-                title: 'Duidelijkheid en richting',
-                text: 'Je krijgt duidelijkheid en richting. Geen vage conclusies.'
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-sm">
-                <div className="text-[#0CBABA] mb-4">{item.icon}</div>
-                <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                <p className="text-gray-600">{item.text}</p>
-              </div>
-            ))}
+            <ul className="space-y-4 mb-8">
+              {[
+                'Je houding: hoe je staat en zit',
+                'Je ademhaling: hoe je ademt in rust en onder belasting',
+                'Je beweging: lopen of rennen in slow motion'
+              ].map((item, index) => (
+                <li key={index} className="flex items-start gap-3 text-lg">
+                  <CheckIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-lg text-gray-600">
+              Het doel: begrijpen waarom je klachten blijven terugkomen. Niet raden, maar zien.
+            </p>
           </div>
         </SectionWrapper>
 
@@ -504,7 +521,7 @@ export default function BodyAPKPage() {
                 />
               </div>
               <p className="text-sm text-gray-500 mt-4">
-                In deze video stelt Jari zich voor en zie je hoe een Body-APK in de praktijk verloopt.
+                In deze video stelt Jari zich voor en zie je hoe een Body-APK verloopt.
               </p>
             </div>
 
@@ -516,8 +533,7 @@ export default function BodyAPKPage() {
 
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Jari is coach bij CrossFit Leiden en gespecialiseerd in houding, ademhaling en bewegingsanalyse.
-                  Tijdens de Body-APK kijkt hij niet alleen naar waar je klachten voelt, maar vooral naar hoe je lichaam als geheel beweegt en samenwerkt.
+                  Jari is coach bij CrossFit Leiden en gespecialiseerd in houding, ademhaling en bewegingsanalyse. Hij kijkt niet alleen naar waar je klachten voelt, maar vooral naar hoe je lichaam als geheel beweegt.
                 </p>
 
                 <p>
@@ -525,9 +541,7 @@ export default function BodyAPKPage() {
                 </p>
 
                 <p>
-                  Het doel is niet om iets meteen te &quot;fixen&quot;, maar om te begrijpen wat er speelt.
-                  Soms betekent dat trainen. Soms juist even niet.
-                  Je krijgt een eerlijk en helder beeld van wat logisch is als volgende stap.
+                  Het doel is niet om iets meteen te &quot;fixen&quot;, maar om te begrijpen wat er speelt. Soms betekent dat trainen. Soms juist even niet. Je krijgt een eerlijk beeld van wat logisch is als volgende stap.
                 </p>
               </div>
             </div>
@@ -535,13 +549,77 @@ export default function BodyAPKPage() {
         </SectionWrapper>
 
         {/* ================================================================ */}
+        {/* DIFFERENTIATION - WHY THIS IS DIFFERENT */}
+        {/* ================================================================ */}
+        <SectionWrapper className="bg-black text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Al van alles geprobeerd?</h2>
+
+          <div className="max-w-3xl">
+            <ul className="space-y-4 mb-10">
+              {[
+                'Je bent bij de fysio geweest, maar de klacht komt terug',
+                'Je hebt oefeningen gekregen die niet werken',
+                'Je bent het zat om steeds hetzelfde verhaal te vertellen',
+                'Je wilt eindelijk weten waar het probleem vandaan komt'
+              ].map((item, index) => (
+                <li key={index} className="flex items-start gap-3 text-lg">
+                  <span className="w-2 h-2 bg-[#EF4C37] rounded-full mt-2.5 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-xl text-gray-300">
+              De Body-APK is geen symptoombestrijding. We zoeken de oorzaak. En laten je zien wat er aan de hand is.
+            </p>
+          </div>
+        </SectionWrapper>
+
+        {/* ================================================================ */}
+        {/* WHAT THE BODY-APK DELIVERS */}
+        {/* ================================================================ */}
+        <SectionWrapper>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Wat levert de Body-APK op?</h2>
+
+          <div className="max-w-3xl">
+            <ul className="space-y-4 mb-10">
+              {[
+                'We brengen exact in kaart waar jouw lichaam vastloopt',
+                'Je begrijpt waarom klachten blijven terugkomen',
+                'Je weet welke stap logisch is om vooruit te komen',
+                'Geen symptoombestrijding, maar werken aan de oorzaak'
+              ].map((item, index) => (
+                <li key={index} className="flex items-start gap-3 text-lg">
+                  <CheckIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl">
+            {[
+              { icon: <VideoIcon className="w-6 h-6" />, text: "Slow-motion video's van je beweging" },
+              { icon: <CameraIcon className="w-6 h-6" />, text: "Houdingsfoto's" },
+              { icon: <VideoIcon className="w-6 h-6" />, text: 'Korte uitlegvideo' },
+              { icon: <ClipboardIcon className="w-6 h-6" />, text: 'Samenvatting met concrete vervolgstappen' }
+            ].map((item, index) => (
+              <div key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
+                <span className="text-[#0CBABA]">{item.icon}</span>
+                <span className="text-lg">{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </SectionWrapper>
+
+        {/* ================================================================ */}
         {/* WHO IS IT FOR SECTION */}
         {/* ================================================================ */}
         <SectionWrapper className="bg-gray-50">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Voor wie is dit bedoeld?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">Voor wie is dit geschikt?</h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-green-50 p-8 rounded-lg">
+            <div className="bg-white p-8 rounded-lg">
               <h3 className="font-semibold text-lg mb-6 flex items-center gap-2">
                 <CheckIcon className="w-6 h-6 text-green-600" />
                 Wel geschikt als je...
@@ -549,10 +627,9 @@ export default function BodyAPKPage() {
               <ul className="space-y-3">
                 {[
                   'Terugkerende klachten hebt en wilt weten waar het vandaan komt',
-                  'Wilt begrijpen hoe je beweegt en wat je kunt verbeteren',
-                  'Preventief inzicht wilt in je houding en bewegingspatronen',
-                  'Openstaat voor een eerlijk gesprek over wat er speelt',
-                  'Bereid bent om zelf aan de slag te gaan met de uitkomst'
+                  'Klaar bent met pleisters plakken en de oorzaak wilt aanpakken',
+                  'Bereid bent om zelf aan de slag te gaan met de uitkomst',
+                  'Openstaat voor een eerlijk gesprek over wat er speelt'
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <CheckIcon className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
@@ -562,17 +639,17 @@ export default function BodyAPKPage() {
               </ul>
             </div>
 
-            <div className="bg-gray-50 p-8 rounded-lg">
+            <div className="bg-white p-8 rounded-lg">
               <h3 className="font-semibold text-lg mb-6 flex items-center gap-2">
                 <XIcon className="w-6 h-6 text-gray-400" />
                 Niet geschikt als je...
               </h3>
               <ul className="space-y-3 text-gray-600">
                 {[
-                  'Acute zorg of medische hulp nodig hebt',
+                  'Acute pijn hebt en medische hulp nodig hebt',
+                  'Verwacht dat wij je pijn laten verdwijnen',
                   'Op zoek bent naar een snelle fix zonder eigen inzet',
-                  'Een officiële diagnose of verwijzing verwacht',
-                  'Verwacht dat wij je pijn direct laten verdwijnen'
+                  'Een officiële diagnose of verwijzing verwacht'
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <XIcon className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
@@ -585,33 +662,30 @@ export default function BodyAPKPage() {
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* PROCESS SECTION - UPDATED */}
+        {/* PROCESS SECTION */}
         {/* ================================================================ */}
         <SectionWrapper className="bg-black text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Zo verloopt het</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">Zo werkt het</h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 step: '1',
-                title: 'Kennismaking (telefonisch)',
-                description: 'We starten met een kort telefoongesprek van 5-10 minuten. We bespreken je klacht of vraag en plannen samen de analyse in.',
-                color: 'bg-[#F7CB15]',
-                icon: <PhoneIcon className="w-5 h-5" />
+                title: 'Belafspraak',
+                description: 'We bellen je kort (5-10 minuten) om je situatie te bespreken. Zo weten we of de Body-APK bij je past.',
+                color: 'bg-[#F7CB15]'
               },
               {
                 step: '2',
                 title: 'Analyse in de gym',
-                description: 'Tijdens de Body-APK analyseren we je houding, ademhaling en beweging (lopen of rennen) in slow motion. Alles afgestemd op jouw belastbaarheid.',
-                color: 'bg-[#0CBABA]',
-                icon: <LocationIcon className="w-5 h-5" />
+                description: 'Tijdens de sessie (60-90 min) analyseren we je houding, ademhaling en beweging. Alles afgestemd op wat jij aankan.',
+                color: 'bg-[#0CBABA]'
               },
               {
                 step: '3',
                 title: 'Uitleg en vervolgstap',
-                description: 'Je krijgt beelden, uitleg en een heldere samenvatting. Geen verplicht vervolg, wel duidelijkheid over wat logisch is om te doen.',
-                color: 'bg-[#EF4C37]',
-                icon: <FileIcon className="w-5 h-5" />
+                description: 'Je krijgt beelden, uitleg en een heldere samenvatting. Plus een concrete volgende stap.',
+                color: 'bg-[#EF4C37]'
               }
             ].map((item, index) => (
               <div key={index} className="relative">
@@ -626,95 +700,32 @@ export default function BodyAPKPage() {
 
           <div className="mt-12">
             <CTAButton onClick={openModal} variant="primary" location="process-section">
-              Plan mijn Body-APK
+              Plan een belafspraak
             </CTAButton>
           </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* WHAT YOU GET SECTION - UPDATED */}
+        {/* MEMBER STORIES 2 & 3 */}
         {/* ================================================================ */}
         <SectionWrapper>
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Wat krijg je mee naar huis?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Meer ervaringen</h2>
+          <p className="text-xl text-gray-600 mb-12">Zo ziet dat er in de praktijk uit.</p>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl">
-            {[
-              { icon: <VideoIcon className="w-6 h-6" />, text: "Slow-motion video's (lopen of rennen)" },
-              { icon: <CameraIcon className="w-6 h-6" />, text: "Houdingsfoto's" },
-              { icon: <VideoIcon className="w-6 h-6" />, text: 'Korte uitlegvideo' },
-              { icon: <ClipboardIcon className="w-6 h-6" />, text: 'Beknopte samenvatting met inzichten en vervolgstappen' }
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                <span className="text-[#0CBABA]">{item.icon}</span>
-                <span className="text-lg">{item.text}</span>
-              </div>
-            ))}
-          </div>
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* VIDEO PLACEHOLDER - Pieter Bas */}
+            <MemberStory
+              videoId="1162593462"
+              name="Pieter Bas"
+              problem="Rugklachten"
+            />
 
-          <p className="text-gray-500 mt-8 text-lg">Geen dik rapport. Wel duidelijkheid.</p>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* PROMISE SECTION */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Wat belooft het wel en niet?</h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg border-l-4 border-[#0CBABA]">
-              <h3 className="font-semibold text-lg mb-6 text-[#0CBABA]">Wel</h3>
-              <ul className="space-y-4">
-                {[
-                  'Inzicht in oorzaken',
-                  'Begrip van samenhang',
-                  'Duidelijke volgende stap',
-                  'Meer vertrouwen in bewegen'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <CheckIcon className="w-5 h-5 text-[#0CBABA]" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg border-l-4 border-gray-300">
-              <h3 className="font-semibold text-lg mb-6 text-gray-500">Niet</h3>
-              <ul className="space-y-4 text-gray-600">
-                {[
-                  'Geen garantie pijnvrij',
-                  'Geen snelle fix zonder inzet',
-                  'Geen medische diagnose'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <XIcon className="w-5 h-5 text-gray-400" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* TESTIMONIALS SECTION - NEW */}
-        {/* ================================================================ */}
-        <SectionWrapper>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ervaringen van anderen</h2>
-          <p className="text-xl text-gray-600 mb-12">
-            Mensen die de Body-APK deden vertellen wat het hen heeft opgeleverd.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="rounded-lg overflow-hidden bg-gray-100">
-              <VideoTestimonial videoId="1162593462" title="Ervaring Body-APK 1" />
-            </div>
-            <div className="rounded-lg overflow-hidden bg-gray-100">
-              <VideoTestimonial videoId="1162592944" title="Ervaring Body-APK 2" />
-            </div>
-            <div className="rounded-lg overflow-hidden bg-gray-100">
-              <VideoTestimonial videoId="1162593587" title="Chantall - member story" />
-            </div>
+            {/* VIDEO PLACEHOLDER - Steph */}
+            <MemberStory
+              videoId="1162592944"
+              name="Steph"
+              problem="Rugklachten / hernia"
+            />
           </div>
         </SectionWrapper>
 
@@ -723,34 +734,26 @@ export default function BodyAPKPage() {
         {/* ================================================================ */}
         <SectionWrapper className="bg-gray-50">
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">En wat nu?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">En daarna?</h2>
             <p className="text-xl text-gray-600 mb-8">
-              De Body-APK staat op zichzelf. Je bent nergens aan gebonden. Maar als je wél verder wilt,
-              zijn er opties.
+              De Body-APK staat op zichzelf. Je bent nergens aan gebonden. Wil je verder, dan begeleiden we je graag.
             </p>
 
             <div className="space-y-4 mb-8">
               <div className="flex items-start gap-4">
                 <div className="w-2 h-2 bg-[#F7CB15] rounded-full mt-2.5" />
                 <div>
-                  <span className="font-medium">1-op-1 trajecten</span>
-                  <span className="text-gray-600 block text-sm">Persoonlijke begeleiding afgestemd op jouw situatie</span>
+                  <span className="font-medium">1-op-1 begeleiding</span>
+                  <span className="text-gray-600 block text-sm">Persoonlijk traject afgestemd op jouw situatie</span>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="w-2 h-2 bg-[#0CBABA] rounded-full mt-2.5" />
                 <div>
-                  <span className="font-medium">Kleine groepen (semi-private)</span>
-                  <span className="text-gray-600 block text-sm">Training in groepen van maximaal 4 personen</span>
+                  <span className="font-medium">Kleine groepen (max 4 personen)</span>
+                  <span className="text-gray-600 block text-sm">Gericht werken aan kracht, controle en belastbaarheid. Altijd afgestemd op jouw lichaam.</span>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <p className="text-gray-600">
-                <strong className="text-black">Geen verplicht vervolg.</strong> Als je wél verder wilt:
-                een persoonlijke route die past bij jouw lijf.
-              </p>
             </div>
           </div>
         </SectionWrapper>
@@ -768,27 +771,28 @@ export default function BodyAPKPage() {
             />
             <FAQItem
               question="Heb ik een verwijzing nodig?"
-              answer="Nee, je kunt direct een afspraak maken. Je hebt geen verwijzing van een arts of specialist nodig."
-            />
-            <FAQItem
-              question="Kan ik dit ook doen zonder klachten?"
-              answer="Zeker. Veel mensen doen de Body-APK preventief. Om inzicht te krijgen in hun houding en bewegingspatronen voordat er klachten ontstaan."
+              answer="Nee. Je kunt direct een afspraak maken."
             />
             <FAQItem
               question="Wat als ik niet kan rennen?"
-              answer="Geen probleem. We passen de analyse aan op wat voor jou mogelijk is. Als lopen of rennen niet gaat, kijken we naar andere bewegingen."
+              answer={
+                <div className="space-y-3">
+                  <p>We passen de analyse aan op wat voor jou mogelijk is.</p>
+                  <p>Belangrijk: als je geen paar minuten pijnvrij kunt lopen, is de Body-APK waarschijnlijk nog niet de juiste stap. Dat bespreken we eerlijk vooraf in het telefoongesprek.</p>
+                </div>
+              }
             />
             <FAQItem
               question="Hoe bereid ik me voor?"
-              answer="Je ontvangt vooraf een korte vragenlijst. Neem comfortabele sportkleding mee waarin je goed kunt bewegen. Schoenen zijn optioneel, we analyseren ook vaak op blote voeten."
+              answer="Je ontvangt vooraf een korte vragenlijst. Neem sportkleding mee waarin je goed kunt bewegen. Schoenen zijn optioneel."
             />
             <FAQItem
               question="Krijg ik oefeningen mee?"
-              answer="Je krijgt advies en vervolgstappen. Soms zijn dat specifieke oefeningen, soms is het advies om eerst iets anders te doen. Dat hangt af van wat we vinden."
+              answer="Je krijgt een concrete vervolgstap. Soms zijn dat oefeningen, soms is het advies om eerst iets anders te doen. Dat hangt af van wat we vinden."
             />
             <FAQItem
               question="Waar vindt het plaats?"
-              answer="Bij CrossFit Leiden, Marie Diebenplaats 108, 2324 NG Leiden. Makkelijk bereikbaar met de auto en openbaar vervoer."
+              answer="Bij CrossFit Leiden, Marie Diebenplaats 108, 2324 NG Leiden."
             />
           </div>
         </SectionWrapper>
@@ -798,18 +802,18 @@ export default function BodyAPKPage() {
         {/* ================================================================ */}
         <SectionWrapper className="bg-black text-white">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Klaar om te starten?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Klaar om te weten wat er speelt?</h2>
             <p className="text-xl text-gray-300 mb-8">
-              Begin met een kort telefoongesprek. We bespreken je situatie en plannen samen de analyse in.
+              We beginnen met een kort telefoongesprek. Vrijblijvend.
             </p>
             <CTAButton onClick={openModal} variant="primary" className="text-lg" location="final-cta">
-              Plan mijn Body-APK
+              Plan een belafspraak
             </CTAButton>
           </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
-        {/* FOOTER - UPDATED ADDRESS */}
+        {/* FOOTER */}
         {/* ================================================================ */}
         <footer className="bg-black text-white py-12 border-t border-gray-800">
           <div className="max-w-6xl mx-auto px-6">
