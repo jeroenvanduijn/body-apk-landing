@@ -256,28 +256,6 @@ const VideoTestimonial = ({ videoId, title }: { videoId: string; title: string }
 );
 
 // ============================================================================
-// MEMBER STORY COMPONENT (Full Width on Mobile)
-// ============================================================================
-
-const MemberStory = ({
-  videoId,
-  name,
-  problem
-}: {
-  videoId: string;
-  name: string;
-  problem: string;
-}) => (
-  <div className="w-full max-w-md mx-auto">
-    <VideoTestimonial videoId={videoId} title={`${name} - ${problem}`} />
-    <div className="mt-4 text-center">
-      <p className="font-semibold text-lg">{name}</p>
-      <p className="text-gray-500">{problem}</p>
-    </div>
-  </div>
-);
-
-// ============================================================================
 // MAIN PAGE COMPONENT
 // ============================================================================
 
@@ -326,37 +304,39 @@ export default function BodyAPKPage() {
               Je auto laat je keuren.<br />Je lichaam niet?
             </h1>
 
-            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-white/90 mb-4 max-w-xl mx-auto">
               De Body-APK laat je letterlijk zien waar je lichaam vastloopt. Geen giswerk. Geen standaard oefeningen. Wel antwoorden.
+            </p>
+
+            <p className="text-lg text-white/80 mb-8 max-w-xl mx-auto">
+              Voor mensen bij wie klachten steeds blijven terugkomen.
             </p>
 
             <CTAButton onClick={openModal} variant="white" className="text-lg" location="hero">
               Plan een belafspraak
             </CTAButton>
-
-            <p className="mt-4 text-sm text-white/70">
-              Geen lidmaatschap nodig · Geen verplicht vervolg
-            </p>
           </div>
         </section>
 
         {/* ================================================================ */}
         {/* TRUST SECTION - Direct onder Hero */}
         {/* ================================================================ */}
-        <section className="bg-white py-8 border-b border-gray-100">
+        <section className="bg-white py-6 border-b border-gray-100">
           <div className="max-w-3xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 text-sm text-gray-600">
+            <div className="flex flex-col items-center gap-3 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <span className="text-[#0CBABA]">✓</span>
+                <span>Geen lidmaatschap nodig</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[#0CBABA]">✓</span>
+                <span>Geen verplicht vervolg</span>
+              </div>
               <div className="flex items-center gap-2">
                 <div className="flex text-[#F7CB15]">
                   <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
                 </div>
-                <span className="font-medium">270+ Google reviews</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-medium">400+ leden bij CrossFit Leiden</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[#0CBABA] font-semibold">✓ Geen verplicht vervolg</span>
+                <span>270+ Google reviews</span>
               </div>
             </div>
           </div>
@@ -370,7 +350,7 @@ export default function BodyAPKPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Herken je dit?</h2>
           </div>
 
-          <ul className="space-y-4 max-w-lg mx-auto">
+          <ul className="space-y-4 max-w-lg mx-auto mb-10">
             {[
               'Het schiet in je rug bij een kleine beweging',
               'Je voelt dat je houding niet klopt, maar je weet niet wat je moet doen',
@@ -384,7 +364,7 @@ export default function BodyAPKPage() {
             ))}
           </ul>
 
-          <div className="text-center mt-10">
+          <div className="text-center">
             <CTAButton onClick={openModal} variant="primary" location="problem-section">
               Ja, dit herken ik
             </CTAButton>
@@ -395,15 +375,21 @@ export default function BodyAPKPage() {
         {/* SECTION 3: MEMBER STORY 1 - CHANTAL */}
         {/* ================================================================ */}
         <SectionWrapper>
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
+            <p className="text-sm text-gray-500 uppercase tracking-wide mb-2">Een voorbeeld uit de praktijk:</p>
             <p className="text-xl text-gray-600">Dit is geen uitzondering.</p>
           </div>
 
-          <MemberStory
-            videoId="1162593587"
-            name="Chantal"
-            problem="Rugklachten"
-          />
+          <div className="w-full max-w-md mx-auto">
+            <p className="text-gray-600 mb-4 text-center">
+              Chantal had al jaren rugklachten en had van alles geprobeerd.
+            </p>
+            <VideoTestimonial videoId="1162593587" title="Chantal - Rugklachten" />
+            <div className="mt-4 text-center">
+              <p className="font-semibold text-lg">Chantal</p>
+              <p className="text-gray-500">Ondernemer uit Leiden · Rugklachten</p>
+            </div>
+          </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
@@ -431,8 +417,7 @@ export default function BodyAPKPage() {
           </ul>
 
           <p className="text-lg text-gray-600 text-center">
-            Het doel: begrijpen waarom je klachten blijven terugkomen.<br />
-            <span className="font-medium text-black">Niet raden, maar zien.</span>
+            Het doel: snappen waarom je klachten blijven terugkomen, ook als je al van alles hebt geprobeerd.
           </p>
         </SectionWrapper>
 
@@ -466,7 +451,13 @@ export default function BodyAPKPage() {
 
             <div className="space-y-4 text-gray-600 leading-relaxed max-w-lg mx-auto">
               <p>
-                Jari is coach bij CrossFit Leiden en gespecialiseerd in houding, ademhaling en bewegingsanalyse. Hij kijkt niet alleen naar waar je klachten voelt, maar vooral naar hoe je lichaam als geheel beweegt.
+                Jari is bewegingsspecialist bij CrossFit Leiden.
+              </p>
+              <p>
+                Hij is gespecialiseerd in houding, ademhaling en bewegingsanalyse. Hij kijkt niet alleen naar waar je klachten voelt, maar vooral naar hoe je lichaam als geheel beweegt.
+              </p>
+              <p>
+                Geen standaard protocollen, maar kijken wat jouw lichaam laat zien.
               </p>
               <p className="font-medium text-black">
                 Zonder haast. Zonder oordeel.
@@ -497,10 +488,14 @@ export default function BodyAPKPage() {
             ))}
           </ul>
 
-          <p className="text-xl text-gray-300 text-center max-w-lg mx-auto">
-            De Body-APK is geen symptoombestrijding.<br />
-            <span className="text-white font-medium">We zoeken de oorzaak.</span>
-          </p>
+          <div className="text-center max-w-lg mx-auto">
+            <p className="text-xl text-white font-semibold mb-2">
+              De Body-APK is geen symptoombestrijding.
+            </p>
+            <p className="text-xl text-gray-300">
+              We zoeken de oorzaak.
+            </p>
+          </div>
         </SectionWrapper>
 
         {/* ================================================================ */}
@@ -525,8 +520,8 @@ export default function BodyAPKPage() {
           </ul>
 
           {/* Deliverables */}
-          <div className="space-y-3 max-w-lg mx-auto">
-            <p className="text-sm text-gray-500 uppercase tracking-wide mb-4 text-center">Je ontvangt:</p>
+          <div className="space-y-3 max-w-lg mx-auto border-t border-gray-100 pt-8">
+            <p className="text-sm text-gray-500 mb-4 text-center">Je ontvangt:</p>
             {[
               { icon: <VideoIcon className="w-5 h-5" />, text: "Slow-motion video's van je beweging" },
               { icon: <CameraIcon className="w-5 h-5" />, text: "Houdingsfoto's" },
@@ -535,7 +530,7 @@ export default function BodyAPKPage() {
             ].map((item, index) => (
               <div key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
                 <span className="text-[#0CBABA]">{item.icon}</span>
-                <span>{item.text}</span>
+                <span className="text-gray-600">{item.text}</span>
               </div>
             ))}
           </div>
@@ -554,7 +549,7 @@ export default function BodyAPKPage() {
               {
                 step: '1',
                 title: 'Belafspraak',
-                description: 'We bellen je kort (5-10 min) om je situatie te bespreken.',
+                description: 'We bellen je kort (5-10 min) om je situatie te bespreken. Geen verkooppraatje.',
                 color: 'bg-[#F7CB15]'
               },
               {
@@ -594,21 +589,26 @@ export default function BodyAPKPage() {
         {/* ================================================================ */}
         <SectionWrapper>
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Meer ervaringen</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2">Meer ervaringen</h2>
+            <p className="text-gray-600">Meer mensen met rugklachten.</p>
           </div>
 
           <div className="space-y-12">
-            <MemberStory
-              videoId="1162593462"
-              name="Pieter Bas"
-              problem="Rugklachten"
-            />
+            <div className="w-full max-w-md mx-auto">
+              <VideoTestimonial videoId="1162593462" title="Pieter Bas - Rugklachten" />
+              <div className="mt-4 text-center">
+                <p className="font-semibold text-lg">Pieter Bas</p>
+                <p className="text-gray-500">Rugklachten</p>
+              </div>
+            </div>
 
-            <MemberStory
-              videoId="1162592944"
-              name="Steph"
-              problem="Rugklachten / hernia"
-            />
+            <div className="w-full max-w-md mx-auto">
+              <VideoTestimonial videoId="1162592944" title="Steph - Rugklachten / hernia" />
+              <div className="mt-4 text-center">
+                <p className="font-semibold text-lg">Steph</p>
+                <p className="text-gray-500">Rugklachten / hernia</p>
+              </div>
+            </div>
           </div>
         </SectionWrapper>
 
@@ -708,13 +708,13 @@ export default function BodyAPKPage() {
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Klaar om te weten wat er speelt?</h2>
             <p className="text-lg text-gray-300 mb-8">
-              We beginnen met een kort telefoongesprek. Vrijblijvend.
+              We beginnen met een kort, vrijblijvend telefoongesprek.
             </p>
             <CTAButton onClick={openModal} variant="white" className="text-lg" location="final-cta">
               Plan een belafspraak
             </CTAButton>
-            <p className="mt-4 text-sm text-gray-400">
-              Geen verplicht vervolg
+            <p className="mt-6 text-sm text-gray-400">
+              400+ leden bij CrossFit Leiden
             </p>
           </div>
         </SectionWrapper>
