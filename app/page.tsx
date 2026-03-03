@@ -215,9 +215,9 @@ const FormModal = ({
           {/* HighLevel Form Embed */}
           <div className="min-h-[500px]">
             <iframe
-              src="https://links.gymops.nl/widget/form/1d5IBAx42RiZJVuf5jqr"
-              style={{ width: '100%', height: '500px', border: 'none', borderRadius: '3px' }}
-              id="inline-1d5IBAx42RiZJVuf5jqr"
+              src="https://links.gymops.nl/widget/form/XceYD5LZEfvepWfcdvXJ"
+              style={{ width: '100%', height: '535px', border: 'none', borderRadius: '3px' }}
+              id="inline-XceYD5LZEfvepWfcdvXJ"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
               data-trigger-value=""
@@ -225,11 +225,11 @@ const FormModal = ({
               data-activation-value=""
               data-deactivation-type="neverDeactivate"
               data-deactivation-value=""
-              data-form-name="Website Form - Body APK Landingspagina"
-              data-height="492"
-              data-layout-iframe-id="inline-1d5IBAx42RiZJVuf5jqr"
-              data-form-id="1d5IBAx42RiZJVuf5jqr"
-              title="Website Form - Body APK Landingspagina"
+              data-form-name="Website Form"
+              data-height="535"
+              data-layout-iframe-id="inline-XceYD5LZEfvepWfcdvXJ"
+              data-form-id="XceYD5LZEfvepWfcdvXJ"
+              title="Website Form"
             />
           </div>
         </div>
