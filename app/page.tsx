@@ -384,7 +384,16 @@ export default function BodyAPKPage() {
             <p className="text-gray-600 mb-4 text-center">
               Chantal had al jaren rugklachten en had van alles geprobeerd.
             </p>
-            <VideoTestimonial videoId="1162593587" title="Chantal - Rugklachten" />
+            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '75%' }}>
+              <iframe
+                src="https://player.vimeo.com/video/1169864962?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                title="Member Story Chantal"
+              />
+            </div>
             <div className="mt-4 text-center">
               <p className="font-semibold text-lg">Chantal</p>
               <p className="text-gray-500">Ondernemer uit Leiden · Rugklachten</p>
