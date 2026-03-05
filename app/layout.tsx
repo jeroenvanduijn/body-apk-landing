@@ -47,7 +47,14 @@ export default function RootLayout({
   return (
     <html lang="nl" className={inter.variable}>
       <head>
-        {/* Meta Pixel Base Code (placeholder - add your Pixel ID) */}
+        {/* Meta Pixel Base Code */}
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img height="1" width="1" style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=1285596611453953&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -59,8 +66,8 @@ export default function RootLayout({
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              // fbq('init', 'YOUR_PIXEL_ID');
-              // fbq('track', 'PageView');
+              fbq('init', '1285596611453953');
+              fbq('track', 'PageView');
             `,
           }}
         />
