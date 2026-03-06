@@ -72,14 +72,15 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Analytics / GA4 (placeholder - add your GA4 ID) */}
+        {/* Google Analytics / GA4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPD4QBBYZ3" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              // gtag('config', 'YOUR_GA4_ID');
+              gtag('config', 'G-JPD4QBBYZ3');
             `,
           }}
         />
