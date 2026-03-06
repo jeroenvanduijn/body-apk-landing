@@ -115,7 +115,7 @@ export default function KennismakingPage() {
             <div className="p-6">
               <iframe
                 src="https://links.gymops.nl/widget/booking/shoFMv6aUldZKsGsUxfm"
-                style={{ width: '100%', minHeight: '600px', border: 'none' }}
+                style={{ width: '100%', minHeight: '900px', border: 'none', overflow: 'hidden' }}
                 scrolling="no"
                 id="hh0GVELEMQIRSCwsLFcf_1770396624673"
                 title="Plan je telefonische kennismaking"
