@@ -384,7 +384,7 @@ export default function BodyAPKPage() {
             <p className="text-gray-600 mb-4 text-center">
               Chantal had al jaren rugklachten en had van alles geprobeerd.
             </p>
-            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '75%' }}>
+            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
               <iframe
                 src="https://player.vimeo.com/video/1169864962?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0"
                 frameBorder="0"
