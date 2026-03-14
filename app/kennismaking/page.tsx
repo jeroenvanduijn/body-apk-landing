@@ -39,7 +39,7 @@ export default function KennismakingPage() {
   return (
     <>
       {/* HighLevel Calendar Script */}
-      <Script src="https://links.gymops.nl/js/form_embed.js" strategy="lazyOnload" />
+      <Script src="https://links.gymops.nl/js/form_embed.js" strategy="afterInteractive" />
 
       {/* Grid Pattern Background */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02] z-0">
@@ -117,7 +117,7 @@ export default function KennismakingPage() {
                 src="https://links.gymops.nl/widget/booking/shoFMv6aUldZKsGsUxfm"
                 style={{ width: '100%', minHeight: '900px', border: 'none', overflow: 'hidden' }}
                 scrolling="no"
-                id="hh0GVELEMQIRSCwsLFcf_1770396624673"
+                id="hh0GVELEMQIRSCwsLFcf_1773475875294"
                 title="Plan je telefonische kennismaking"
               />
             </div>

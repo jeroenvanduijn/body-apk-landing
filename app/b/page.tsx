@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
 // ============================================================================
@@ -183,6 +184,16 @@ const FAQItem = ({
 // 2-STEP MICRO-COMMITMENT MODAL
 // ============================================================================
 
+const COUNTRY_CODES = [
+  { code: '+31', label: '🇳🇱 +31', country: 'NL' },
+  { code: '+32', label: '🇧🇪 +32', country: 'BE' },
+  { code: '+49', label: '🇩🇪 +49', country: 'DE' },
+  { code: '+44', label: '🇬🇧 +44', country: 'UK' },
+  { code: '+33', label: '🇫🇷 +33', country: 'FR' },
+];
+
+const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/Arta9mf7m9NTEPdznlsP/webhook-trigger/fe487f3f-d283-4529-a366-a4f5c5a92c31';
+
 const MicroCommitmentModal = ({
   isOpen,
   onClose
@@ -190,9 +201,11 @@ const MicroCommitmentModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const router = useRouter();
+  const [step, setStep] = useState<1 | 2>(1);
   const [voornaam, setVoornaam] = useState('');
   const [email, setEmail] = useState('');
+  const [countryCode, setCountryCode] = useState('+31');
   const [telefoon, setTelefoon] = useState('');
   const [voorkeurTijdstip, setVoorkeurTijdstip] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -206,6 +219,7 @@ const MicroCommitmentModal = ({
       setVoornaam('');
       setEmail('');
       setTelefoon('');
+      setCountryCode('+31');
       setVoorkeurTijdstip('');
       setError('');
     } else {
@@ -231,10 +245,14 @@ const MicroCommitmentModal = ({
     setError('');
 
     try {
-      await fetch('/api/lead-b', {
+      await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ step: 1, voornaam, email })
+        body: JSON.stringify({
+          naam: voornaam,
+          email,
+          bron: 'Body-APK Landingspagina - Variant B - Stap 1'
+        })
       });
       trackStep(1);
       setStep(2);
@@ -250,18 +268,27 @@ const MicroCommitmentModal = ({
     setError('');
 
     try {
-      await fetch('/api/lead-b', {
+      await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ step: 2, voornaam, email, telefoon, voorkeur_tijdstip: voorkeurTijdstip })
+        body: JSON.stringify({
+          naam: voornaam,
+          email,
+          telefoon: telefoon ? `${countryCode}${telefoon}` : '',
+          voorkeur_tijdstip: voorkeurTijdstip,
+          bron: 'Body-APK Landingspagina - Variant B - Stap 2'
+        })
       });
       trackStep(2);
-      setStep(3);
+      router.push('/kennismaking');
     } catch {
       setError('Er ging iets mis. Probeer het opnieuw.');
-    } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const skipStep2 = () => {
+    router.push('/kennismaking');
   };
 
   if (!isOpen) return null;
@@ -290,9 +317,9 @@ const MicroCommitmentModal = ({
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="voornaam" className="block text-sm font-medium text-gray-700 mb-1">Voornaam</label>
+                  <label htmlFor="voornaam-b" className="block text-sm font-medium text-gray-700 mb-1">Voornaam</label>
                   <input
-                    id="voornaam"
+                    id="voornaam-b"
                     type="text"
                     value={voornaam}
                     onChange={(e) => setVoornaam(e.target.value)}
@@ -302,9 +329,9 @@ const MicroCommitmentModal = ({
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">E-mailadres</label>
+                  <label htmlFor="email-b" className="block text-sm font-medium text-gray-700 mb-1">E-mailadres</label>
                   <input
-                    id="email"
+                    id="email-b"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -349,21 +376,32 @@ const MicroCommitmentModal = ({
 
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="telefoon" className="block text-sm font-medium text-gray-700 mb-1">Telefoonnummer <span className="text-gray-400">(optioneel)</span></label>
-                    <input
-                      id="telefoon"
-                      type="tel"
-                      value={telefoon}
-                      onChange={(e) => setTelefoon(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
-                      placeholder="06-12345678"
-                    />
+                    <label htmlFor="telefoon-b" className="block text-sm font-medium text-gray-700 mb-1">Telefoonnummer <span className="text-gray-400">(optioneel)</span></label>
+                    <div className="flex gap-2">
+                      <select
+                        value={countryCode}
+                        onChange={(e) => setCountryCode(e.target.value)}
+                        className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent bg-white text-sm"
+                      >
+                        {COUNTRY_CODES.map((c) => (
+                          <option key={c.code} value={c.code}>{c.label}</option>
+                        ))}
+                      </select>
+                      <input
+                        id="telefoon-b"
+                        type="tel"
+                        value={telefoon}
+                        onChange={(e) => setTelefoon(e.target.value)}
+                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
+                        placeholder="612345678"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label htmlFor="tijdstip" className="block text-sm font-medium text-gray-700 mb-1">Voorkeur tijdstip</label>
+                    <label htmlFor="tijdstip-b" className="block text-sm font-medium text-gray-700 mb-1">Voorkeur tijdstip</label>
                     <select
-                      id="tijdstip"
+                      id="tijdstip-b"
                       value={voorkeurTijdstip}
                       onChange={(e) => setVoorkeurTijdstip(e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent bg-white"
@@ -386,35 +424,13 @@ const MicroCommitmentModal = ({
                   </button>
 
                   <button
-                    onClick={() => setStep(3)}
+                    onClick={skipStep2}
                     className="w-full text-gray-500 text-sm hover:text-gray-700 py-2 cursor-pointer"
                   >
                     Nee, bedankt
                   </button>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* STEP 3 - DONE */}
-          {step === 3 && (
-            <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckIcon className="w-8 h-8 text-green-600" />
-              </div>
-              <h2 className="text-2xl font-bold mb-2">Bedankt, {voornaam}!</h2>
-              <p className="text-gray-600 mb-6">
-                {telefoon
-                  ? 'We nemen binnenkort contact met je op.'
-                  : 'Check je inbox voor meer informatie over de Body-APK.'
-                }
-              </p>
-              <button
-                onClick={onClose}
-                className="text-[#EF4C37] font-medium hover:underline cursor-pointer"
-              >
-                Terug naar de pagina
-              </button>
             </div>
           )}
         </div>

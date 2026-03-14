@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
 // ============================================================================
@@ -172,6 +173,16 @@ const FAQItem = ({
 // MODAL COMPONENT
 // ============================================================================
 
+const COUNTRY_CODES = [
+  { code: '+31', label: '🇳🇱 +31', country: 'NL' },
+  { code: '+32', label: '🇧🇪 +32', country: 'BE' },
+  { code: '+49', label: '🇩🇪 +49', country: 'DE' },
+  { code: '+44', label: '🇬🇧 +44', country: 'UK' },
+  { code: '+33', label: '🇫🇷 +33', country: 'FR' },
+];
+
+const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/Arta9mf7m9NTEPdznlsP/webhook-trigger/fe487f3f-d283-4529-a366-a4f5c5a92c31';
+
 const FormModal = ({
   isOpen,
   onClose
@@ -179,9 +190,22 @@ const FormModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
+  const router = useRouter();
+  const [naam, setNaam] = useState('');
+  const [email, setEmail] = useState('');
+  const [countryCode, setCountryCode] = useState('+31');
+  const [telefoon, setTelefoon] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      setNaam('');
+      setEmail('');
+      setTelefoon('');
+      setCountryCode('+31');
+      setError('');
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -190,19 +214,45 @@ const FormModal = ({
     };
   }, [isOpen]);
 
+  const handleSubmit = async () => {
+    if (!naam.trim() || !email.trim() || !telefoon.trim()) {
+      setError('Vul alle velden in.');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Vul een geldig e-mailadres in.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          naam,
+          email,
+          telefoon: `${countryCode}${telefoon}`,
+          bron: 'Body-APK Landingspagina - Variant A'
+        })
+      });
+      router.push('/kennismaking');
+    } catch {
+      setError('Er ging iets mis. Probeer het opnieuw.');
+      setIsSubmitting(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Modal */}
-      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        {/* Close button */}
+      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors z-10"
@@ -211,32 +261,69 @@ const FormModal = ({
           <CloseIcon />
         </button>
 
-        {/* Content */}
         <div className="p-6 md:p-8">
           <h2 className="text-2xl font-bold mb-2">Plan je Body-APK</h2>
           <p className="text-gray-600 mb-6">
             Laat je gegevens achter. Daarna plan je direct een kort telefoongesprek (5-10 min).
           </p>
 
-          {/* HighLevel Form Embed */}
-          <div className="min-h-[500px]">
-            <iframe
-              src="https://links.gymops.nl/widget/form/1d5IBAx42RiZJVuf5jqr"
-              style={{ width: '100%', height: '413px', border: 'none', borderRadius: '3px' }}
-              id="inline-1d5IBAx42RiZJVuf5jqr"
-              data-layout="{'id':'INLINE'}"
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="Website Form - Body APK Landingspagina"
-              data-height="413"
-              data-layout-iframe-id="inline-1d5IBAx42RiZJVuf5jqr"
-              data-form-id="1d5IBAx42RiZJVuf5jqr"
-              title="Website Form - Body APK Landingspagina"
-            />
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="naam" className="block text-sm font-medium text-gray-700 mb-1">Naam</label>
+              <input
+                id="naam"
+                type="text"
+                value={naam}
+                onChange={(e) => setNaam(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
+                placeholder="Je naam"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email-a" className="block text-sm font-medium text-gray-700 mb-1">E-mailadres</label>
+              <input
+                id="email-a"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
+                placeholder="je@email.nl"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="telefoon-a" className="block text-sm font-medium text-gray-700 mb-1">Telefoonnummer</label>
+              <div className="flex gap-2">
+                <select
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                  className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent bg-white text-sm"
+                >
+                  {COUNTRY_CODES.map((c) => (
+                    <option key={c.code} value={c.code}>{c.label}</option>
+                  ))}
+                </select>
+                <input
+                  id="telefoon-a"
+                  type="tel"
+                  value={telefoon}
+                  onChange={(e) => setTelefoon(e.target.value)}
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
+                  placeholder="612345678"
+                />
+              </div>
+            </div>
+
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="w-full bg-[#EF4C37] text-white font-semibold py-4 rounded-lg hover:bg-[#d9442f] transition-colors disabled:opacity-50 cursor-pointer"
+            >
+              {isSubmitting ? 'Even geduld...' : 'Verstuur en plan je gesprek →'}
+            </button>
           </div>
         </div>
       </div>
@@ -275,9 +362,6 @@ export default function BodyAPKPage() {
     <>
       {/* Vimeo Player Script */}
       <Script src="https://player.vimeo.com/api/player.js" strategy="lazyOnload" />
-
-      {/* HighLevel Form Script */}
-      <Script src="https://links.gymops.nl/js/form_embed.js" strategy="lazyOnload" />
 
       {/* Form Modal */}
       <FormModal isOpen={isModalOpen} onClose={closeModal} />
