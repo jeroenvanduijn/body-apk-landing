@@ -11,12 +11,18 @@ declare global {
     dataLayer?: Record<string, unknown>[];
     fbq?: (...args: unknown[]) => void;
     gtag?: (...args: unknown[]) => void;
+    hj?: (...args: unknown[]) => void;
   }
 }
 
 const trackCTAClick = (location: string) => {
-  if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({ event: 'cta_click', cta_location: location });
+  if (typeof window !== 'undefined') {
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'cta_click', cta_location: location });
+    }
+    if (window.hj) {
+      window.hj('event', 'formulier_knop_geklikt');
+    }
   }
 };
 
