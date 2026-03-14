@@ -251,6 +251,7 @@ const MicroCommitmentModal = ({
         body: JSON.stringify({
           naam: voornaam,
           email,
+          telefoon: telefoon ? `${countryCode}${telefoon}` : '',
           bron: 'Body-APK Landingspagina - Variant B - Stap 1'
         })
       });
@@ -338,6 +339,29 @@ const MicroCommitmentModal = ({
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
                     placeholder="je@email.nl"
                   />
+                </div>
+
+                <div>
+                  <label htmlFor="telefoon-b-step1" className="block text-sm font-medium text-gray-700 mb-1">Telefoonnummer</label>
+                  <div className="flex gap-2">
+                    <select
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                      className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent bg-white text-sm"
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={c.code} value={c.code}>{c.label}</option>
+                      ))}
+                    </select>
+                    <input
+                      id="telefoon-b-step1"
+                      type="tel"
+                      value={telefoon}
+                      onChange={(e) => setTelefoon(e.target.value)}
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
+                      placeholder="612345678"
+                    />
+                  </div>
                 </div>
 
                 {error && <p className="text-red-500 text-sm">{error}</p>}
