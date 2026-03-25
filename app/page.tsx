@@ -27,8 +27,8 @@ interface VimeoPlayer {
 
 const trackCTAClick = (location: string) => {
   if (typeof window !== 'undefined') {
-    if (window.dataLayer) {
-      window.dataLayer.push({ event: 'cta_click', cta_location: location });
+    if (window.gtag) {
+      window.gtag('event', 'cta_click', { cta_location: location });
     }
     if (window.hj) {
       window.hj('event', 'formulier_knop_geklikt');
@@ -368,8 +368,8 @@ const useVimeoTracking = (
   const progressMilestones = useRef(new Set<number>());
 
   const pushEvent = useCallback((event: string, extra?: Record<string, unknown>) => {
-    if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({ event, video_id: videoId, video_title: videoTitle, ...extra });
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', event, { video_id: videoId, video_title: videoTitle, ...extra });
     }
   }, [videoId, videoTitle]);
 
