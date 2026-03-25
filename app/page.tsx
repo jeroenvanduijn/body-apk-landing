@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
@@ -13,7 +13,16 @@ declare global {
     fbq?: (...args: unknown[]) => void;
     gtag?: (...args: unknown[]) => void;
     hj?: (...args: unknown[]) => void;
+    Vimeo?: {
+      Player: new (element: HTMLIFrameElement) => VimeoPlayer;
+    };
   }
+}
+
+interface VimeoPlayer {
+  on: (event: string, callback: (data?: { percent?: number; seconds?: number; duration?: number }) => void) => void;
+  off: (event: string) => void;
+  destroy: () => void;
 }
 
 const trackCTAClick = (location: string) => {
@@ -348,21 +357,121 @@ const FormModal = ({
 };
 
 // ============================================================================
+// VIDEO TRACKING HOOK
+// ============================================================================
+
+const useVimeoTracking = (
+  iframeRef: React.RefObject<HTMLIFrameElement | null>,
+  videoId: string,
+  videoTitle: string
+) => {
+  const progressMilestones = useRef(new Set<number>());
+
+  const pushEvent = useCallback((event: string, extra?: Record<string, unknown>) => {
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({ event, video_id: videoId, video_title: videoTitle, ...extra });
+    }
+  }, [videoId, videoTitle]);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe || typeof window === 'undefined') return;
+
+    let player: VimeoPlayer | null = null;
+    let retries = 0;
+    const maxRetries = 20;
+
+    const initPlayer = () => {
+      if (!window.Vimeo?.Player) {
+        if (retries < maxRetries) {
+          retries++;
+          setTimeout(initPlayer, 500);
+        }
+        return;
+      }
+
+      try {
+        player = new window.Vimeo.Player(iframe);
+        progressMilestones.current = new Set();
+
+        player.on('play', () => {
+          pushEvent('video_start');
+        });
+
+        player.on('ended', () => {
+          pushEvent('video_complete');
+        });
+
+        player.on('timeupdate', (data) => {
+          if (!data?.percent) return;
+          const pct = Math.floor(data.percent * 100);
+          for (const milestone of [25, 50, 75]) {
+            if (pct >= milestone && !progressMilestones.current.has(milestone)) {
+              progressMilestones.current.add(milestone);
+              pushEvent('video_progress', { video_percent: milestone });
+            }
+          }
+        });
+      } catch {
+        // iframe not ready yet
+      }
+    };
+
+    initPlayer();
+
+    return () => {
+      if (player) {
+        try { player.destroy(); } catch { /* ignore */ }
+      }
+    };
+  }, [iframeRef, pushEvent]);
+};
+
+// ============================================================================
 // VIDEO TESTIMONIAL COMPONENT
 // ============================================================================
 
-const VideoTestimonial = ({ videoId, title }: { videoId: string; title: string }) => (
-  <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
-    <iframe
-      src={`https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`}
-      frameBorder="0"
-      allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-      referrerPolicy="strict-origin-when-cross-origin"
-      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-      title={title}
-    />
-  </div>
-);
+const VideoTestimonial = ({ videoId, title }: { videoId: string; title: string }) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  useVimeoTracking(iframeRef, videoId, title);
+
+  return (
+    <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
+      <iframe
+        ref={iframeRef}
+        src={`https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`}
+        frameBorder="0"
+        allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        referrerPolicy="strict-origin-when-cross-origin"
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        title={title}
+      />
+    </div>
+  );
+};
+
+// ============================================================================
+// JARI INTRO VIDEO COMPONENT (with tracking)
+// ============================================================================
+
+const JariIntroVideo = () => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  useVimeoTracking(iframeRef, '1162594482', 'Body APK intro - Jari stelt zich voor');
+
+  return (
+    <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
+      <iframe
+        ref={iframeRef}
+        src="https://player.vimeo.com/video/1162594482?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&texttrack=nl"
+        frameBorder="0"
+        allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        referrerPolicy="strict-origin-when-cross-origin"
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        title="Body APK intro - Jari stelt zich voor"
+      />
+    </div>
+  );
+};
 
 // ============================================================================
 // FLOATING WHATSAPP BUTTON
@@ -616,16 +725,7 @@ export default function BodyAPKPage() {
 
           {/* Video */}
           <div className="w-full max-w-md mx-auto mb-8">
-            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ paddingTop: '177.78%' }}>
-              <iframe
-                src="https://player.vimeo.com/video/1162594482?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&texttrack=nl"
-                frameBorder="0"
-                allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                referrerPolicy="strict-origin-when-cross-origin"
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                title="Body APK intro - Jari stelt zich voor"
-              />
-            </div>
+            <JariIntroVideo />
           </div>
 
           {/* Text */}
