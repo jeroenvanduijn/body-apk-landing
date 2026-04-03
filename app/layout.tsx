@@ -48,15 +48,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="nl" className={inter.variable}>
-      <head>
-        <noscript>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img height="1" width="1" style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=34572054022438510&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
-      </head>
       <body className={`${inter.className} antialiased`}>
         {/* Meta Pixel */}
         <Script id="fb-pixel" strategy="afterInteractive">
@@ -73,6 +64,13 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img height="1" width="1" style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=34572054022438510&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
 
         {/* Google Analytics / GA4 */}
         <Script
