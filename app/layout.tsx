@@ -1,21 +1,21 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { DM_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 
 export const metadata: Metadata = {
-  title: 'Body-APK | Diepgaande houding- en bewegingsanalyse | CrossFit Leiden',
-  description: 'Begrijp waar je klachten écht vandaan komen met een Body-APK bij CrossFit Leiden. Persoonlijke 1-op-1 sessie met houding-, ademhaling- en bewegingsanalyse. Geen lidmaatschap nodig.',
-  keywords: ['body-apk', 'houdingsanalyse', 'bewegingsanalyse', 'CrossFit Leiden', 'rugklachten', 'nekklachten', 'blessurepreventie'],
+  title: 'Rugpijn die steeds terugkomt? | Body-APK | CrossFit Leiden',
+  description: 'Ontdek waar je rugpijn écht vandaan komt. De Body-APK is een diepgaande bewegingsanalyse die laat zien waarom klachten blijven terugkomen.',
+  keywords: ['body-apk', 'rugpijn', 'bewegingsanalyse', 'CrossFit Leiden', 'rugklachten', 'nekklachten', 'houdingsproblemen'],
   openGraph: {
-    title: 'Body-APK | Diepgaande houding- en bewegingsanalyse',
-    description: 'Begrijp waar je klachten écht vandaan komen. Persoonlijke 1-op-1 sessie met houding-, ademhaling- en bewegingsanalyse bij CrossFit Leiden.',
+    title: 'Rugpijn die steeds terugkomt? | Body-APK',
+    description: 'Ontdek waar je rugpijn écht vandaan komt. De Body-APK is een diepgaande bewegingsanalyse die laat zien waarom klachten blijven terugkomen.',
     type: 'website',
     locale: 'nl_NL',
-    url: 'https://crossfitleiden.nl/body-apk',
+    url: 'https://bodyapk.crossfitleiden.com',
     siteName: 'CrossFit Leiden',
     images: [
       {
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Body-APK | Diepgaande houding- en bewegingsanalyse',
-    description: 'Begrijp waar je klachten écht vandaan komen. Persoonlijke 1-op-1 sessie bij CrossFit Leiden.',
+    title: 'Rugpijn die steeds terugkomt? | Body-APK',
+    description: 'Ontdek waar je rugpijn écht vandaan komt. De Body-APK laat zien waarom klachten blijven terugkomen.',
     images: ['/images/body-apk-og.jpg'],
   },
   robots: {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://crossfitleiden.nl/body-apk',
+    canonical: 'https://bodyapk.crossfitleiden.com',
   },
 };
 
@@ -47,8 +47,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="nl" className={inter.variable}>
-      <body className={`${inter.className} antialiased`}>
+    <html lang="nl" className={dmSans.variable}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+      </head>
+      <body className={`${dmSans.className} antialiased`}>
         {/* Meta Pixel */}
         <Script id="fb-pixel" strategy="afterInteractive">
           {`

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
 // ============================================================================
@@ -34,326 +33,6 @@ const trackCTAClick = (location: string) => {
       window.hj('event', 'formulier_knop_geklikt');
     }
   }
-};
-
-// ============================================================================
-// ICONS (inline SVGs)
-// ============================================================================
-const CheckIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="currentColor">
-    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-  </svg>
-);
-
-const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="currentColor">
-    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-  </svg>
-);
-
-const CloseIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronDownIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="currentColor">
-    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-  </svg>
-);
-
-const StarIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="currentColor">
-    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-  </svg>
-);
-
-const VideoIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <rect x="2" y="4" width="12" height="12" rx="1" />
-    <path d="M14 8l4-2v8l-4-2" />
-  </svg>
-);
-
-const CameraIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <rect x="2" y="5" width="16" height="12" rx="2" />
-    <circle cx="10" cy="11" r="3" />
-    <path d="M6 5V4a1 1 0 011-1h6a1 1 0 011 1v1" />
-  </svg>
-);
-
-const ClipboardIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <rect x="4" y="3" width="12" height="15" rx="1" />
-    <path d="M8 2h4v2H8z" />
-    <path d="M7 9h6M7 12h4" />
-  </svg>
-);
-
-const WhatsAppIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-);
-
-const QuoteIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" opacity="0.15">
-    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151C7.563 6.068 6 8.789 6 11h4v10H0z"/>
-  </svg>
-);
-
-// ============================================================================
-// COMPONENTS
-// ============================================================================
-
-const CTAButton = ({
-  children,
-  onClick,
-  variant = 'primary',
-  className = '',
-  location = 'unknown'
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  variant?: 'primary' | 'secondary' | 'white';
-  className?: string;
-  location?: string;
-}) => {
-  const baseStyles = "inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer rounded-lg";
-
-  const variants = {
-    primary: "bg-[#EF4C37] text-white px-8 py-4 hover:bg-[#d9442f] focus:ring-[#EF4C37] shadow-lg hover:shadow-xl",
-    secondary: "border-2 border-black text-black px-8 py-4 hover:bg-black hover:text-white focus:ring-black",
-    white: "bg-white text-black px-8 py-4 hover:bg-gray-100 focus:ring-white shadow-lg"
-  };
-
-  const handleClick = () => {
-    trackCTAClick(location);
-    onClick();
-  };
-
-  return (
-    <button
-      type="button"
-      className={`${baseStyles} ${variants[variant]} ${className}`}
-      onClick={handleClick}
-    >
-      {children}
-    </button>
-  );
-};
-
-const SectionWrapper = ({
-  children,
-  className = '',
-  id
-}: {
-  children: React.ReactNode;
-  className?: string;
-  id?: string;
-}) => (
-  <section id={id} className={`py-16 md:py-24 ${className}`}>
-    <div className="max-w-3xl mx-auto px-6">
-      {children}
-    </div>
-  </section>
-);
-
-const FAQItem = ({
-  question,
-  answer
-}: {
-  question: string;
-  answer: React.ReactNode;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="border-b border-gray-200">
-      <button
-        className="w-full py-5 text-left flex justify-between items-center focus:outline-none"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-      >
-        <span className="text-lg font-medium pr-4">{question}</span>
-        <ChevronDownIcon className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[500px] pb-5' : 'max-h-0'}`}
-        aria-hidden={!isOpen}
-      >
-        <div className="text-gray-600 leading-relaxed">{answer}</div>
-      </div>
-    </div>
-  );
-};
-
-// ============================================================================
-// MODAL COMPONENT
-// ============================================================================
-
-const COUNTRY_CODES = [
-  { code: '+31', label: '\u{1F1F3}\u{1F1F1} +31', country: 'NL' },
-  { code: '+32', label: '\u{1F1E7}\u{1F1EA} +32', country: 'BE' },
-  { code: '+49', label: '\u{1F1E9}\u{1F1EA} +49', country: 'DE' },
-  { code: '+44', label: '\u{1F1EC}\u{1F1E7} +44', country: 'UK' },
-  { code: '+33', label: '\u{1F1EB}\u{1F1F7} +33', country: 'FR' },
-];
-
-const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/Arta9mf7m9NTEPdznlsP/webhook-trigger/fe487f3f-d283-4529-a366-a4f5c5a92c31';
-
-const FormModal = ({
-  isOpen,
-  onClose
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
-  const router = useRouter();
-  const [naam, setNaam] = useState('');
-  const [email, setEmail] = useState('');
-  const [countryCode, setCountryCode] = useState('+31');
-  const [telefoon, setTelefoon] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      setNaam('');
-      setEmail('');
-      setTelefoon('');
-      setCountryCode('+31');
-      setError('');
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
-  const handleSubmit = async () => {
-    if (!naam.trim() || !email.trim() || !telefoon.trim()) {
-      setError('Vul alle velden in.');
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Vul een geldig e-mailadres in.');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          naam,
-          email,
-          telefoon: `${countryCode}${telefoon}`,
-          bron: 'Body-APK Landingspagina'
-        })
-      });
-      router.push('/kennismaking');
-    } catch {
-      setError('Er ging iets mis. Probeer het opnieuw.');
-      setIsSubmitting(false);
-    }
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-
-      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors z-10"
-          aria-label="Sluiten"
-        >
-          <CloseIcon />
-        </button>
-
-        <div className="p-6 md:p-8">
-          <h2 className="text-2xl font-bold mb-2">Help me van mijn klachten af</h2>
-          <p className="text-gray-600 mb-6">
-            Vul hieronder je gegevens in. Na het invullen kun je een gratis kennismaking plannen met Coach Jari om te bepalen of hij je kan helpen.
-          </p>
-
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="naam" className="block text-sm font-medium text-gray-700 mb-1">Voornaam</label>
-              <input
-                id="naam"
-                type="text"
-                value={naam}
-                onChange={(e) => setNaam(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
-                placeholder="Je voornaam"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email-a" className="block text-sm font-medium text-gray-700 mb-1">E-mailadres</label>
-              <input
-                id="email-a"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
-                placeholder="je@email.nl"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="telefoon-a" className="block text-sm font-medium text-gray-700 mb-1">Telefoonnummer</label>
-              <div className="flex gap-2">
-                <select
-                  value={countryCode}
-                  onChange={(e) => setCountryCode(e.target.value)}
-                  className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent bg-white text-sm"
-                >
-                  {COUNTRY_CODES.map((c) => (
-                    <option key={c.code} value={c.code}>{c.label}</option>
-                  ))}
-                </select>
-                <input
-                  id="telefoon-a"
-                  type="tel"
-                  value={telefoon}
-                  onChange={(e) => setTelefoon(e.target.value)}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF4C37] focus:border-transparent"
-                  placeholder="612345678"
-                />
-              </div>
-            </div>
-
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="w-full bg-[#EF4C37] text-white font-semibold py-4 rounded-lg hover:bg-[#d9442f] transition-colors disabled:opacity-50 cursor-pointer"
-            >
-              {isSubmitting ? 'Even geduld...' : 'Ja, plan mijn kennismaking \u2192'}
-            </button>
-
-            <p className="text-xs text-gray-400 text-center">
-              Geen spam. Je kunt je altijd uitschrijven.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 };
 
 // ============================================================================
@@ -474,68 +153,301 @@ const JariIntroVideo = () => {
 };
 
 // ============================================================================
-// FLOATING WHATSAPP BUTTON
+// WHATSAPP ICON
 // ============================================================================
 
-const FloatingWhatsApp = () => (
-  <a
-    href="https://wa.me/31712340285?text=Hoi%2C%20ik%20heb%20een%20vraag%20over%20de%20Body-APK"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="fixed bottom-20 md:bottom-6 right-4 z-50 flex items-center gap-2 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:bg-[#20bd5a] transition-all group"
-    aria-label="Stel je vraag via WhatsApp"
-  >
-    <WhatsAppIcon className="w-6 h-6" />
-    <span className="hidden md:inline text-sm font-medium">Stel je vraag via WhatsApp</span>
-  </a>
+const WhatsAppIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
 );
 
 // ============================================================================
-// TESTIMONIAL DATA
+// FORM MODAL (2-step)
 // ============================================================================
 
-const testimonials = [
+const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/Arta9mf7m9NTEPdznlsP/webhook-trigger/fe487f3f-d283-4529-a366-a4f5c5a92c31';
+
+const FormModal = ({
+  isOpen,
+  onClose
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  const [step, setStep] = useState(1);
+  const [naam, setNaam] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefoon, setTelefoon] = useState('');
+  const [tijdstip, setTijdstip] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      setStep(1);
+      setNaam('');
+      setEmail('');
+      setTelefoon('');
+      setTijdstip('');
+      setError('');
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
+  const submitStep1 = async () => {
+    if (!naam.trim() || !email.trim()) {
+      setError('Vul je voornaam en e-mailadres in.');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Vul een geldig e-mailadres in.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          naam,
+          email,
+          bron: 'Body-APK Rugpijn LP - Stap 1'
+        })
+      });
+
+      if (window.fbq) {
+        window.fbq('track', 'Lead', {
+          content_name: 'Body-APK Rugpijn Info Request',
+          content_category: 'rugpijn'
+        });
+      }
+      if (window.gtag) {
+        window.gtag('event', 'generate_lead', { method: 'form_step1' });
+      }
+      if (window.hj) {
+        window.hj('event', 'variant_b_stap_1');
+      }
+
+      setStep(2);
+    } catch {
+      setError('Er ging iets mis. Probeer het opnieuw.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitStep2 = async () => {
+    if (!telefoon.trim()) {
+      setError('Vul je telefoonnummer in.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          naam,
+          email,
+          telefoon,
+          voorkeur_tijdstip: tijdstip,
+          bron: 'Body-APK Rugpijn LP - Stap 2'
+        })
+      });
+
+      if (window.gtag) {
+        window.gtag('event', 'schedule_callback', { method: 'form_step2' });
+      }
+
+      setStep(3);
+    } catch {
+      setError('Er ging iets mis. Probeer het opnieuw.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const showSuccess = () => setStep(3);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-5"
+      style={{ backdropFilter: 'blur(4px)' }}>
+      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
+
+      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-[420px] max-h-[90vh] overflow-y-auto"
+        style={{ padding: '36px 28px' }}>
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl leading-none cursor-pointer"
+          aria-label="Sluiten"
+        >
+          &times;
+        </button>
+
+        {/* Step 1 */}
+        {step === 1 && (
+          <div>
+            <div className="flex gap-2 mb-6">
+              <div className="w-8 h-1 rounded-sm bg-[#EF4C37]" />
+              <div className="w-8 h-1 rounded-sm bg-gray-200" />
+            </div>
+            <h3 className="font-heading text-[22px] font-bold mb-2">Meer weten over de Body-APK?</h3>
+            <p className="text-[15px] text-gray-600 mb-6">
+              Vul je gegevens in en we sturen je meer informatie over hoe de Body-APK je kan helpen bij je rugpijn.
+            </p>
+            <div className="mb-4">
+              <label htmlFor="fname" className="block text-sm font-semibold text-gray-700 mb-1.5">Voornaam</label>
+              <input
+                id="fname"
+                type="text"
+                value={naam}
+                onChange={(e) => setNaam(e.target.value)}
+                className="w-full px-3.5 py-3 border-[1.5px] border-gray-200 rounded-lg text-[15px] focus:outline-none focus:border-[#EF4C37] transition-colors"
+                placeholder="Je voornaam"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">E-mailadres</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3.5 py-3 border-[1.5px] border-gray-200 rounded-lg text-[15px] focus:outline-none focus:border-[#EF4C37] transition-colors"
+                placeholder="je@email.nl"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+            <button
+              onClick={submitStep1}
+              disabled={isSubmitting}
+              className="w-full py-3.5 bg-[#EF4C37] text-white rounded-full font-bold text-base cursor-pointer hover:bg-[#d93d29] transition-colors disabled:opacity-50 mt-2"
+            >
+              {isSubmitting ? 'Even geduld...' : 'Ja, stuur me meer info \u2192'}
+            </button>
+          </div>
+        )}
+
+        {/* Step 2 */}
+        {step === 2 && (
+          <div>
+            <div className="flex gap-2 mb-6">
+              <div className="w-8 h-1 rounded-sm bg-[#EF4C37]" />
+              <div className="w-8 h-1 rounded-sm bg-[#EF4C37]" />
+            </div>
+            <h3 className="font-heading text-[22px] font-bold mb-2">Wil je ook een gratis belafspraak?</h3>
+            <p className="text-[15px] text-gray-600 mb-6">
+              Een kort gesprek van 5-10 minuten om je rugklachten te bespreken. Geen verkooppraatje.
+            </p>
+            <div className="mb-4">
+              <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-1.5">Telefoonnummer</label>
+              <input
+                id="phone"
+                type="tel"
+                value={telefoon}
+                onChange={(e) => setTelefoon(e.target.value)}
+                className="w-full px-3.5 py-3 border-[1.5px] border-gray-200 rounded-lg text-[15px] focus:outline-none focus:border-[#EF4C37] transition-colors"
+                placeholder="06 12345678"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="timepref" className="block text-sm font-semibold text-gray-700 mb-1.5">Voorkeur tijdstip</label>
+              <select
+                id="timepref"
+                value={tijdstip}
+                onChange={(e) => setTijdstip(e.target.value)}
+                className="w-full px-3.5 py-3 border-[1.5px] border-gray-200 rounded-lg text-[15px] focus:outline-none focus:border-[#EF4C37] transition-colors bg-white"
+              >
+                <option value="">Kies een tijdstip</option>
+                <option value="ochtend">Ochtend (9:00 - 12:00)</option>
+                <option value="middag">Middag (12:00 - 17:00)</option>
+                <option value="avond">Avond (17:00 - 20:00)</option>
+              </select>
+            </div>
+            {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+            <button
+              onClick={submitStep2}
+              disabled={isSubmitting}
+              className="w-full py-3.5 bg-[#EF4C37] text-white rounded-full font-bold text-base cursor-pointer hover:bg-[#d93d29] transition-colors disabled:opacity-50 mt-2"
+            >
+              {isSubmitting ? 'Even geduld...' : 'Plan mijn belafspraak'}
+            </button>
+            <button
+              onClick={showSuccess}
+              className="block w-full text-center mt-3 text-sm text-gray-400 underline cursor-pointer bg-transparent border-none"
+            >
+              Nee bedankt, alleen de informatie
+            </button>
+          </div>
+        )}
+
+        {/* Success */}
+        {step === 3 && (
+          <div className="text-center py-5">
+            <div className="w-14 h-14 bg-[#0CBABA] rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <h3 className="font-heading text-[22px] font-bold mb-2">Top, je hoort van ons!</h3>
+            <p className="text-[15px] text-gray-600">
+              We sturen je meer informatie over de Body-APK. Heb je in de tussentijd vragen? Stuur ons een{' '}
+              <a href="https://wa.me/31712340285" className="text-[#EF4C37] font-semibold hover:underline" target="_blank" rel="noopener noreferrer">
+                WhatsApp-berichtje
+              </a>.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ============================================================================
+// STORY DATA
+// ============================================================================
+
+const stories = [
   {
     name: 'Diana (40)',
     location: 'Rijnsburg',
     complaint: 'Dubbele hernia + verschoven wervel',
     videoId: '1176722336',
-    summary: 'Kon geen 100 meter lopen. Het ziekenhuis zei: opereren, drie wervels vastzetten met schroeven. Nu loopt ze 10.000 stappen per dag en is de hernia niet meer te zien op foto\'s.',
-  },
-  {
-    name: 'Angelique (40)',
-    location: 'Leiderdorp',
-    complaint: 'Pijn overal, geen vertrouwen in haar lichaam',
-    videoId: '1176722243',
-    summary: 'Was 4-5 dagen ziek van spierpijn na een workout. Durfde niet meer naar de sportles. Had al honderd dingen geprobeerd. Nu pijnvrij en vertrouwt haar lichaam weer.',
+    before: 'Kon geen 100 meter lopen. Niet staan koken. Niet met de kinderen weg. Het ziekenhuis zei: opereren. De onderste drie wervels vastzetten met schroeven en pennen. Diana vroeg of bewegen een optie was. Het antwoord: nee.',
+    transition: 'Na de Body-APK + Unlock Motion Small Group',
+    after: 'Loopt nu 10.000 stappen per dag. Hernia niet meer te zien op foto\u2019s. Verschoven wervel zit recht. Zonder operatie. Zonder schroeven.',
+    featured: true,
   },
   {
     name: 'Willem (56)',
     location: 'Katwijk',
     complaint: 'Zenuwpijn in been',
     videoId: '1176722175',
-    summary: 'Drie maanden uit zijn werk door zenuwpijn. Huisarts zei: rust. Na een paar weken bij Jari weer aan het werk. Nu 100% klachtenvrij.',
-  },
-  {
-    name: 'Erica',
-    location: 'Leiden',
-    complaint: 'Heupblessure',
-    videoId: '1176722280',
-    summary: 'Drie fysio\'s, drie diagnoses, niks hielp. Kon niet meer hardlopen en sliep niet van de pijn. Nu rent ze 7,5 km pijnvrij en deed ze de Hyrox.',
-  },
-  {
-    name: 'Marieke (30)',
-    location: 'Leiden',
-    complaint: 'Achillespees/kuit',
-    videoId: '1176722373',
-    summary: 'Drie jaar lang elke ochtend stijf alsof ze 80 was. Steeds dezelfde cirkel: fysio, even beter, dan weer terug. Nu al een half jaar compleet pijnvrij.',
+    before: 'Drie maanden uit zijn werk door zenuwpijn. Huisarts zei: rust.',
+    transition: 'Na een paar weken bij Jari',
+    after: 'Weer aan het werk. Nu 100% klachtenvrij.',
   },
   {
     name: 'Job (28)',
     location: 'Leiden',
     complaint: 'Nek- en rugklachten',
     videoId: '1176722201',
-    summary: 'Brandweerman. Kon geen 20 minuten achter een computer zitten. Fysio en chiropractor hielpen alleen de dag erna. Nu pijnvrij en weet precies hoe hij zijn houding moet aanpassen.',
+    before: 'Brandweerman. Kon geen 20 minuten achter een computer zitten. Fysio en chiropractor hielpen alleen de dag erna.',
+    transition: 'Na de Body-APK',
+    after: 'Pijnvrij. Weet precies hoe hij zijn houding moet aanpassen.',
   },
 ];
 
@@ -546,8 +458,10 @@ const testimonials = [
 export default function BodyAPKPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = (location: string) => {
+    trackCTAClick(location);
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -555,589 +469,376 @@ export default function BodyAPKPage() {
       <Script src="https://player.vimeo.com/api/player.js" strategy="lazyOnload" />
 
       {/* Form Modal */}
-      <FormModal isOpen={isModalOpen} onClose={closeModal} />
+      <FormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* Floating WhatsApp Button */}
-      <FloatingWhatsApp />
+      {/* WhatsApp Float */}
+      <a
+        href="https://wa.me/31712340285?text=Hoi%2C%20ik%20heb%20een%20vraag%20over%20de%20Body-APK%20voor%20rugpijn"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center z-[100] hover:scale-110 transition-transform"
+        style={{ boxShadow: '0 4px 20px rgba(37,211,102,0.4)' }}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+      >
+        <WhatsAppIcon />
+      </a>
 
-      {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 p-4 md:hidden z-50">
-        <CTAButton onClick={openModal} variant="primary" className="w-full text-center" location="sticky-mobile">
-          Help me van mijn klachten af
-        </CTAButton>
-      </div>
+      <main>
+        {/* ── Top Bar ── */}
+        <div className="bg-[#1a1a1a] text-white text-center py-2.5 px-5 text-[13px] font-medium tracking-wide">
+          CrossFit Leiden &middot; Marie Diebenplaats 108, Leiden
+        </div>
 
-      <main className="relative pb-24 md:pb-0">
-        {/* ================================================================ */}
-        {/* HERO SECTION */}
-        {/* ================================================================ */}
-        <section className="relative min-h-screen flex items-center justify-center">
-          {/* Background Image */}
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('https://oehoqgwhk6gydfz3.public.blob.vercel-storage.com/pictures/Scherm%C2%ADafbeelding%202026-02-06%20om%2017.01.53.png')`
-            }}
-          />
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-black/55" />
-
-          {/* Content */}
-          <div className="relative z-10 max-w-3xl mx-auto px-6 py-20 text-center text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Je auto laat je keuren.<br />Je lichaam niet?
+        {/* ── Hero ── */}
+        <section className="py-12 md:py-16 text-center"
+          style={{ background: 'linear-gradient(180deg, #fafafa 0%, #ffffff 100%)' }}>
+          <div className="max-w-[680px] mx-auto px-5">
+            <span className="inline-block bg-[#EF4C37] text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+              Rugpijn
+            </span>
+            <h1 className="font-heading font-extrabold leading-[1.15] mb-4 tracking-tight"
+              style={{ fontSize: 'clamp(28px, 7vw, 42px)' }}>
+              Rugpijn die steeds <span className="text-[#EF4C37]">terugkomt?</span>
             </h1>
-
-            <p className="text-lg md:text-xl text-white/90 mb-4 max-w-xl mx-auto">
-              De Body-APK laat je letterlijk zien waar je lichaam vastloopt. Geen giswerk. Geen standaard oefeningen. Wel antwoorden.
+            <p className="text-[17px] text-gray-600 max-w-[500px] mx-auto mb-8 leading-relaxed">
+              De Body-APK laat je zien waar het echt vandaan komt. Geen giswerk. Geen standaard oefeningen. Wel antwoorden.
             </p>
-
-            <p className="text-lg text-white/80 mb-8 max-w-xl mx-auto">
-              Voor mensen met terugkerende rugpijn, nekklachten of houdingsproblemen die al van alles hebben geprobeerd.
-            </p>
-
-            <CTAButton onClick={openModal} variant="white" className="text-lg" location="hero">
-              Help me van mijn klachten af
-            </CTAButton>
-          </div>
-        </section>
-
-        {/* ================================================================ */}
-        {/* TRUST SECTION */}
-        {/* ================================================================ */}
-        <section className="bg-white py-6 border-b border-gray-100">
-          <div className="max-w-3xl mx-auto px-6">
-            <div className="flex flex-col items-center gap-3 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <span className="text-[#0CBABA]">{'\u2713'}</span>
-                <span>Geen lidmaatschap nodig</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[#0CBABA]">{'\u2713'}</span>
-                <span>Geen verplicht vervolg</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex text-[#F7CB15]">
-                  <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
-                </div>
-                <span>270+ Google reviews</span>
-              </div>
+            <button
+              onClick={() => openModal('hero')}
+              className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
+              style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
+            >
+              Ontdek of de Body-APK bij je past
+            </button>
+            <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-gray-600">
+              <span className="flex items-center gap-1.5"><span className="text-[#0CBABA] font-bold">{'\u2713'}</span> Geen lidmaatschap nodig</span>
+              <span className="flex items-center gap-1.5"><span className="text-[#0CBABA] font-bold">{'\u2713'}</span> Geen verplicht vervolg</span>
+              <span className="flex items-center gap-1.5"><span className="text-[#0CBABA] font-bold">{'\u2713'}</span> 270+ Google reviews</span>
             </div>
           </div>
         </section>
 
-        {/* ================================================================ */}
-        {/* SECTION: HERKEN JE DIT? */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Herken je dit?</h2>
-          </div>
-
-          <ul className="space-y-4 max-w-lg mx-auto mb-10">
-            {[
-              'Je wordt \'s ochtends wakker en je eerste stappen doen al pijn',
-              'Je kunt niet lang zitten, staan of lopen zonder klachten',
-              'Je sport, maar dezelfde pijn blijft terugkomen',
-              'Je denkt: dit hoort vast bij het ouder worden. Of erger: dit gaat niet meer weg.'
-            ].map((item, index) => (
-              <li key={index} className="flex items-start gap-3 text-lg">
-                <span className="w-2 h-2 bg-[#EF4C37] rounded-full mt-2.5 flex-shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="text-center">
-            <CTAButton onClick={openModal} variant="primary" location="problem-section">
+        {/* ── Herken je dit? ── */}
+        <section className="py-14 bg-[#fafafa]">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Herken je dit?</p>
+            <h2 className="font-heading font-bold leading-tight mb-5"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Je hebt rugpijn. En het gaat niet weg.
+            </h2>
+            <ul className="my-6">
+              {[
+                'Je wordt \u2019s ochtends wakker en je rug is al stijf',
+                'Je kunt niet lang zitten of staan zonder pijn',
+                'Je bent al bij de fysio geweest, maar de klacht komt steeds terug',
+                'Je denkt: dit hoort vast bij het ouder worden',
+                'Je hebt misschien zelfs gehoord dat een operatie de enige oplossing is',
+              ].map((item, i) => (
+                <li key={i} className="py-3.5 border-b border-gray-200 last:border-b-0 text-base text-gray-700 flex items-start gap-3 leading-relaxed">
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#EF4C37] rounded-full flex items-center justify-center mt-0.5">
+                    <svg viewBox="0 0 12 12" fill="none" width="12" height="12"><path d="M2 6h8" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg>
+                  </div>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => openModal('herken-je-dit')}
+              className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
+              style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
+            >
               Ja, dit herken ik
-            </CTAButton>
+            </button>
           </div>
-        </SectionWrapper>
+        </section>
 
-        {/* ================================================================ */}
-        {/* SECTION: DIT ZIJN MENSEN ZOALS JIJ (6 klantverhalen) */}
-        {/* ================================================================ */}
-        <SectionWrapper>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Dit zijn mensen zoals jij</h2>
-            <p className="text-lg text-gray-600">
-              Ze hadden allemaal lang last. Ze hadden allemaal al van alles geprobeerd. Dit is wat er veranderde.
-            </p>
-          </div>
+        {/* ── Member Stories (text cards + videos) ── */}
+        <section className="py-14">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Zij hadden hetzelfde</p>
+            <h2 className="font-heading font-bold leading-tight mb-8"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Rugpijn. Al van alles geprobeerd. Dit veranderde alles.
+            </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((t, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl overflow-hidden">
-                <VideoTestimonial videoId={t.videoId} title={`${t.name} - ${t.complaint}`} />
-                <div className="p-4">
-                  <p className="font-semibold text-lg">{t.name}</p>
-                  <p className="text-sm text-gray-500 mb-2">{t.location} · {t.complaint}</p>
-                  <p className="text-gray-600 text-sm leading-relaxed">{t.summary}</p>
+            {/* Story cards */}
+            {stories.map((s, i) => (
+              <div key={i} className={`rounded-xl mb-5 relative overflow-hidden ${
+                s.featured
+                  ? 'bg-[#fafafa] border-2 border-[#EF4C37] p-7 md:p-8'
+                  : 'bg-white border border-gray-200 p-7'
+              }`}>
+                {!s.featured && <div className="absolute top-0 left-0 w-1 h-full bg-[#EF4C37]" />}
+
+                {/* Video */}
+                <div className="mb-5 max-w-sm mx-auto">
+                  <VideoTestimonial videoId={s.videoId} title={`${s.name} - ${s.complaint}`} />
                 </div>
+
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-bold text-[17px]">{s.name}</span>
+                  <span className="text-sm text-gray-400">{s.location}</span>
+                </div>
+                <span className="inline-block bg-[#EF4C37]/[0.08] text-[#EF4C37] text-[13px] font-semibold px-3 py-1 rounded-full mb-3.5">
+                  {s.complaint}
+                </span>
+                <p className="text-[15px] text-gray-700 leading-relaxed mb-3">{s.before}</p>
+                <div className="flex items-center gap-2 font-bold text-sm text-[#0CBABA] mb-3">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M8 14l4-4M8 14l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+                  {s.transition}
+                </div>
+                <p className="text-[15px] font-medium text-[#1a1a1a] leading-relaxed">{s.after}</p>
+              </div>
+            ))}
+
+            {/* Angelique quote block */}
+            <div className="bg-[#1a1a1a] text-white p-10 rounded-xl my-8 text-center">
+              <blockquote className="text-[19px] italic leading-relaxed mb-3">
+                &ldquo;Ik heb misschien al honderd dingen geprobeerd. Maar voor mij is dit het laatste wat ik hoefde te proberen.&rdquo;
+              </blockquote>
+              <cite className="not-italic text-sm text-gray-400">Angelique (40), Leiderdorp</cite>
+            </div>
+
+            {/* More video testimonials */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+              {[
+                { name: 'Erica', location: 'Leiden', complaint: 'Heupblessure', videoId: '1176722280' },
+                { name: 'Marieke (30)', location: 'Leiden', complaint: 'Achillespees/kuit', videoId: '1176722373' },
+                { name: 'Angelique (40)', location: 'Leiderdorp', complaint: 'Pijn overal', videoId: '1176722243' },
+              ].map((t, i) => (
+                <div key={i} className="bg-[#fafafa] rounded-xl overflow-hidden">
+                  <VideoTestimonial videoId={t.videoId} title={`${t.name} - ${t.complaint}`} />
+                  <div className="p-3">
+                    <p className="font-semibold text-sm">{t.name}</p>
+                    <p className="text-xs text-gray-400">{t.location} &middot; {t.complaint}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Al van alles geprobeerd ── */}
+        <section className="py-14 bg-[#fafafa]">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Klinkt bekend?</p>
+            <h2 className="font-heading font-bold leading-tight mb-5"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Al van alles geprobeerd voor je rug?
+            </h2>
+            <ul className="my-5">
+              {[
+                'Fysiotherapie \u2014 even beter, daarna weer terug bij af',
+                'Chiropractor \u2014 helpt voor een dag, niet voor de lange termijn',
+                'Oefeningen van YouTube \u2014 maar je weet niet of je ze goed doet',
+                'Rust \u2014 maar zodra je weer beweegt is het terug',
+                'Misschien zelfs het advies: opereren',
+              ].map((item, i) => (
+                <li key={i} className="py-2.5 text-[15px] text-gray-700 flex items-start gap-2.5 leading-relaxed">
+                  <span className="text-[#EF4C37] font-bold flex-shrink-0">{'\u2715'}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 font-medium text-base">De Body-APK is geen symptoombestrijding. We zoeken de oorzaak.</p>
+          </div>
+        </section>
+
+        {/* ── Wat is de Body-APK ── */}
+        <section className="py-14">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">De aanpak</p>
+            <h2 className="font-heading font-bold leading-tight mb-5"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Wat is de Body-APK?
+            </h2>
+            <p className="text-base text-gray-700 mb-6 leading-relaxed">
+              Een diepgaande analyse van hoe je lichaam beweegt. Niet alleen waar het pijn doet, maar waarom het pijn doet.
+            </p>
+
+            <div className="grid grid-cols-1 gap-4 mb-8">
+              {[
+                { emoji: '\uD83D\uDCD0', title: 'Houding', desc: 'Hoe je staat en zit. Waar je lichaam compenseert.' },
+                { emoji: '\uD83D\uDCA8', title: 'Ademhaling', desc: 'Hoe je ademt in rust en onder belasting.' },
+                { emoji: '\uD83C\uDFA5', title: 'Beweging', desc: 'Lopen of rennen in slow motion. Tot in detail geanalyseerd.' },
+              ].map((item, i) => (
+                <div key={i} className="bg-[#fafafa] rounded-lg p-5">
+                  <h4 className="font-bold text-[15px] mb-1.5 flex items-center gap-2">
+                    <span>{item.emoji}</span> {item.title}
+                  </h4>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Verschil met fysio */}
+            <h3 className="text-lg font-bold mt-8 mb-3">Verschil met een fysio</h3>
+            <div className="w-full overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="text-left text-[13px] uppercase tracking-wide text-gray-400 px-3 py-2.5 border-b-2 border-gray-200">Fysio</th>
+                    <th className="text-left text-[13px] uppercase tracking-wide text-gray-400 px-3 py-2.5 border-b-2 border-gray-200">Body-APK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ['Kijkt naar waar het pijn doet', 'Kijkt naar hoe je hele lichaam beweegt'],
+                    ['Behandelt het symptoom', 'Zoekt de oorzaak'],
+                    ['Standaard protocol', 'Analyse op maat met video en foto'],
+                  ].map(([fysio, apk], i) => (
+                    <tr key={i}>
+                      <td className="px-3 py-3 text-[15px] border-b border-gray-100 text-gray-600 align-top leading-relaxed">{fysio}</td>
+                      <td className="px-3 py-3 text-[15px] border-b border-gray-100 font-medium align-top leading-relaxed">{apk}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Jari ── */}
+        <section className="py-14 bg-[#fafafa]">
+          <div className="max-w-[680px] mx-auto px-5">
+            <div className="bg-white rounded-xl p-7 shadow-sm">
+              <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Je begeleider</p>
+              <h3 className="font-heading text-xl font-bold mb-3">Jari, bewegingsspecialist</h3>
+
+              {/* Jari video */}
+              <div className="max-w-xs mx-auto mb-5">
+                <JariIntroVideo />
+              </div>
+
+              <p className="text-[15px] text-gray-700 mb-3 leading-relaxed">
+                Jari kijkt niet naar je klacht. Hij kijkt naar je houding, je looppatroon, je ademhaling. Op slow motion video. Met foto&apos;s van voor en na.
+              </p>
+              <p className="text-[15px] text-gray-700 mb-4 leading-relaxed">
+                Geen standaard protocollen, maar kijken wat jouw lichaam laat zien. Zonder haast. Zonder oordeel.
+              </p>
+              <span className="inline-block bg-[#F7CB15]/15 text-gray-800 text-[13px] font-semibold px-3.5 py-1.5 rounded-full">
+                Max. 4 Body-APK&apos;s per week
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Wat levert het op ── */}
+        <section className="py-14">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Wat je krijgt</p>
+            <h2 className="font-heading font-bold leading-tight mb-6"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Na de Body-APK weet je precies wat er speelt
+            </h2>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { emoji: '\uD83C\uDFAC', text: 'Slow-motion video\u2019s van je beweging' },
+                { emoji: '\uD83D\uDCF8', text: 'Houdingsfoto\u2019s voor en na' },
+                { emoji: '\uD83C\uDFA5', text: 'Korte uitleg-video' },
+                { emoji: '\uD83D\uDCCB', text: 'Samenvatting met concrete vervolgstappen' },
+              ].map((item, i) => (
+                <div key={i} className="bg-[#fafafa] rounded-lg p-4 text-center">
+                  <div className="text-2xl mb-2">{item.emoji}</div>
+                  <p className="text-[13px] text-gray-600 leading-snug">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Zo werkt het ── */}
+        <section className="py-14 bg-[#fafafa]">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Het proces</p>
+            <h2 className="font-heading font-bold leading-tight mb-7"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Zo werkt het
+            </h2>
+
+            <div className="mt-7">
+              {[
+                { num: '1', title: 'Kennismaking', desc: 'We bellen je kort (5-10 min) om je rugklachten te bespreken. Geen verkooppraatje.' },
+                { num: '2', title: 'Analyse in de gym', desc: 'Tijdens de sessie (60-90 min) analyseren we je houding, ademhaling en beweging.' },
+                { num: '3', title: 'Uitleg en vervolgstap', desc: 'Je krijgt beelden, uitleg en een heldere samenvatting van wat we vinden.' },
+              ].map((step, i) => (
+                <div key={i} className="flex gap-4 mb-7 items-start">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#EF4C37] text-white rounded-full flex items-center justify-center font-heading font-bold text-base">
+                    {step.num}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-base mb-1">{step.title}</h4>
+                    <p className="text-[15px] text-gray-600">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-2">
+              <button
+                onClick={() => openModal('zo-werkt-het')}
+                className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
+                style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
+              >
+                Ontdek of de Body-APK bij je past
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Twijfels ── */}
+        <section className="py-14">
+          <div className="max-w-[680px] mx-auto px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Twijfels?</p>
+            <h2 className="font-heading font-bold leading-tight mb-6"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Die hadden zij ook.
+            </h2>
+
+            {[
+              { quote: 'Ik loop er al zo lang mee. Hoe kan iemand het dan oplossen binnen een paar maanden? Maar het werkte.', cite: 'Marieke, achillespees/kuit' },
+              { quote: 'Je denkt: gaat dit het wel zijn? Zeker na een half jaar fysio. Maar in de loop der weken merkte ik: dit is het.', cite: 'Job, nek- en rugklachten' },
+              { quote: 'Ik heb goed over het prijskaartje nagedacht. Maar het is me al het geld waard, omdat ik nu weer pijnvrij alles kan doen.', cite: 'Marieke' },
+            ].map((d, i) => (
+              <div key={i} className="bg-[#fafafa] rounded-lg p-5 mb-3">
+                <blockquote className="text-[15px] italic text-gray-700 leading-relaxed mb-2">
+                  &ldquo;{d.quote}&rdquo;
+                </blockquote>
+                <cite className="not-italic text-[13px] text-gray-400">{d.cite}</cite>
               </div>
             ))}
           </div>
+        </section>
 
-          <div className="text-center mt-10">
-            <CTAButton onClick={openModal} variant="primary" location="testimonials">
-              Help me van mijn klachten af
-            </CTAButton>
+        {/* ── Final CTA ── */}
+        <section className="bg-[#1a1a1a] text-white text-center py-14">
+          <div className="max-w-[680px] mx-auto px-5">
+            <h2 className="font-heading font-bold leading-tight mb-6 text-white"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Klaar om te weten waar je rugpijn vandaan komt?
+            </h2>
+            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Diana</strong> kon geen 100 meter lopen. Nu doet ze 10.000 stappen per dag.</p>
+            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Willem</strong> was 3 maanden uit zijn werk. Nu 100% klachtenvrij.</p>
+            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Job</strong> kon niet achter zijn computer zitten. Nu pijnvrij.</p>
+            <button
+              onClick={() => openModal('final-cta')}
+              className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all mt-8"
+              style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
+            >
+              Ontdek of de Body-APK bij je past
+            </button>
+            <p className="mt-4 text-sm text-gray-400">We beginnen met een kort, vrijblijvend telefoongesprek.</p>
           </div>
-        </SectionWrapper>
+        </section>
 
-        {/* ================================================================ */}
-        {/* SECTION: WAT IS DE BODY-APK? */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Wat is de Body-APK?</h2>
-            <p className="text-xl text-gray-600">
-              Een diepgaande lichaamsanalyse waarbij we kijken naar:
-            </p>
-          </div>
-
-          <ul className="space-y-4 max-w-lg mx-auto mb-10">
-            {[
-              'Je houding: hoe je staat en zit',
-              'Je ademhaling: hoe je ademt in rust en onder belasting',
-              'Je beweging: lopen of rennen in slow motion'
-            ].map((item, index) => (
-              <li key={index} className="flex items-start gap-3 text-lg">
-                <CheckIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-
-          <p className="text-lg text-gray-600 text-center">
-            Het doel: snappen waarom je klachten blijven terugkomen, ook als je al van alles hebt geprobeerd.
+        {/* ── Footer ── */}
+        <footer className="text-center py-8 px-5 text-[13px] text-gray-400">
+          <p>CrossFit Leiden &middot; Marie Diebenplaats 108, 2324 NG Leiden</p>
+          <p className="mt-2">
+            <a href="/privacy" className="text-gray-400 hover:text-gray-600 transition-colors">Privacyvoorwaarden</a>
+            {' '}&middot; &copy; {new Date().getFullYear()} CrossFit Leiden
           </p>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: WIE BEGELEIDT DE BODY-APK? (JARI) */}
-        {/* ================================================================ */}
-        <SectionWrapper>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Wie begeleidt de Body-APK?</h2>
-          </div>
-
-          {/* Video */}
-          <div className="w-full max-w-md mx-auto mb-8">
-            <JariIntroVideo />
-          </div>
-
-          {/* Text */}
-          <div className="text-center">
-            <h3 className="text-xl md:text-2xl font-semibold mb-4">
-              De Body-APK wordt begeleid door Jari.
-            </h3>
-
-            <div className="space-y-4 text-gray-600 leading-relaxed max-w-lg mx-auto">
-              <p>
-                Jari is bewegingsspecialist bij CrossFit Leiden.
-              </p>
-              <p>
-                Hij is gespecialiseerd in houding, ademhaling en bewegingsanalyse. Hij kijkt niet alleen naar waar je klachten voelt, maar vooral naar hoe je lichaam als geheel beweegt.
-              </p>
-              <p>
-                Geen standaard protocollen, maar kijken wat jouw lichaam laat zien.
-              </p>
-              <p className="font-medium text-black">
-                Zonder haast. Zonder oordeel.
-              </p>
-            </div>
-
-            {/* Schaarste-element */}
-            <div className="mt-8 inline-block bg-[#F7CB15]/15 border border-[#F7CB15]/30 rounded-lg px-6 py-3">
-              <p className="text-sm font-medium text-gray-800">
-                Jari doet maximaal 4 Body-APK&apos;s per week.
-              </p>
-            </div>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: AL VAN ALLES GEPROBEERD? */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-black text-white">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Al van alles geprobeerd?</h2>
-          </div>
-
-          <ul className="space-y-4 max-w-lg mx-auto mb-10">
-            {[
-              'Je bent bij de fysio geweest (misschien wel drie verschillende), maar de klacht komt steeds terug',
-              'Je hebt oefeningen gekregen die even helpen, maar na een paar maanden ben je weer terug bij af',
-              'Je chiropractor lost het op voor een dag, maar niet voor de lange termijn',
-              'Je hebt misschien zelfs gehoord dat een operatie de enige oplossing is',
-              'Je hebt misschien al honderd dingen geprobeerd en denkt: waarom zou dit anders zijn?',
-              'Je wilt eindelijk weten waar het probleem \u00e9cht vandaan komt'
-            ].map((item, index) => (
-              <li key={index} className="flex items-start gap-3 text-lg">
-                <span className="w-2 h-2 bg-[#EF4C37] rounded-full mt-2.5 flex-shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="text-center max-w-lg mx-auto">
-            <p className="text-xl text-white font-semibold mb-2">
-              De Body-APK is geen symptoombestrijding.
-            </p>
-            <p className="text-xl text-gray-300">
-              We zoeken de oorzaak.
-            </p>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: WAT IS HET VERSCHIL MET EEN FYSIO? (NIEUW) */}
-        {/* ================================================================ */}
-        <SectionWrapper>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Wat is het verschil met een fysio?</h2>
-          </div>
-
-          <div className="space-y-6 max-w-lg mx-auto mb-10">
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Bij een fysio wordt vaak gekeken naar de plek waar het pijn doet. De Body-APK kijkt naar hoe je hele lichaam beweegt.
-            </p>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Jari kijkt niet naar je klacht. Hij kijkt naar je houding, je looppatroon, je ademhaling. Op slow motion video. Met foto&apos;s van voor en na.
-            </p>
-            <p className="text-lg font-semibold text-black">
-              Het verschil? Een fysio behandelt waar het pijn doet. De Body-APK zoekt uit waarom het pijn doet.
-            </p>
-          </div>
-
-          {/* Quote blocks */}
-          <div className="space-y-4 max-w-lg mx-auto">
-            <div className="bg-gray-50 rounded-xl p-6 relative">
-              <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-              <p className="text-gray-700 italic pl-6">
-                &ldquo;Drie fysio&apos;s gaven drie verschillende diagnoses. Jari heeft gewoon gekeken naar hoe ik beweeg.&rdquo;
-              </p>
-              <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Erica</p>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-6 relative">
-              <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-              <p className="text-gray-700 italic pl-6">
-                &ldquo;Ik ging filmpjes kijken hoe een oefening moet. Maar bij mij gingen de juiste spieren niet aan op die manier. Jari ging net zo lang zoeken totdat ik het w&eacute;l op de juiste plek voelde.&rdquo;
-              </p>
-              <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Angelique</p>
-            </div>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: WAT LEVERT HET OP? */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Wat levert het op?</h2>
-          </div>
-
-          <ul className="space-y-4 max-w-lg mx-auto mb-10">
-            {[
-              'We brengen exact in kaart waar jouw lichaam vastloopt',
-              'Je begrijpt waarom klachten blijven terugkomen',
-              'Je weet welke stap logisch is om vooruit te komen'
-            ].map((item, index) => (
-              <li key={index} className="flex items-start gap-3 text-lg">
-                <CheckIcon className="w-6 h-6 text-[#0CBABA] flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* Deliverables */}
-          <div className="space-y-3 max-w-lg mx-auto border-t border-gray-200 pt-8">
-            <p className="text-sm text-gray-500 mb-4 text-center">Je ontvangt:</p>
-            {[
-              { icon: <VideoIcon className="w-5 h-5" />, text: "Slow-motion video's van je beweging" },
-              { icon: <CameraIcon className="w-5 h-5" />, text: "Houdingsfoto's" },
-              { icon: <VideoIcon className="w-5 h-5" />, text: 'Korte uitlegvideo' },
-              { icon: <ClipboardIcon className="w-5 h-5" />, text: 'Samenvatting met concrete vervolgstappen' }
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-4 bg-white p-4 rounded-lg">
-                <span className="text-[#0CBABA]">{item.icon}</span>
-                <span className="text-gray-600">{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: ZO WERKT HET */}
-        {/* ================================================================ */}
-        <SectionWrapper>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Zo werkt het</h2>
-          </div>
-
-          <div className="space-y-8 max-w-lg mx-auto">
-            {[
-              {
-                step: '1',
-                title: 'Kennismaking',
-                description: 'We bellen je kort (5-10 min) om je situatie te bespreken. Geen verkooppraatje.',
-                color: 'bg-[#F7CB15]'
-              },
-              {
-                step: '2',
-                title: 'Analyse in de gym',
-                description: 'Tijdens de sessie (60-90 min) analyseren we je houding, ademhaling en beweging.',
-                color: 'bg-[#0CBABA]'
-              },
-              {
-                step: '3',
-                title: 'Uitleg en vervolgstap',
-                description: 'Je krijgt beelden, uitleg en een heldere samenvatting.',
-                color: 'bg-[#EF4C37]'
-              }
-            ].map((item, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className={`${item.color} text-black w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0`}>
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <CTAButton onClick={openModal} variant="primary" location="process-section">
-              Help me van mijn klachten af
-            </CTAButton>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: TWIJFELS? DIE HADDEN ZIJ OOK. (NIEUW) */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Twijfels? Die hadden zij ook.</h2>
-          </div>
-
-          <div className="max-w-lg mx-auto space-y-8">
-            {/* Over de investering */}
-            <div>
-              <p className="text-sm font-medium text-gray-400 uppercase tracking-wide mb-4">Over de investering</p>
-              <div className="space-y-4">
-                <div className="bg-white rounded-xl p-6 relative">
-                  <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-                  <p className="text-gray-700 italic pl-6">
-                    &ldquo;Ik heb goed over het prijskaartje nagedacht. Maar het is me al het geld waard, omdat ik nu weer pijnvrij alles kan doen.&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Marieke, achillespees/kuit</p>
-                </div>
-                <div className="bg-white rounded-xl p-6 relative">
-                  <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-                  <p className="text-gray-700 italic pl-6">
-                    &ldquo;Het is een groot bedrag. Maar ik dacht: wat is het mij waard om me weer zeker te voelen?&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Angelique, Leiderdorp</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Over "gaat dit wel werken?" */}
-            <div>
-              <p className="text-sm font-medium text-gray-400 uppercase tracking-wide mb-4">Over &ldquo;gaat dit wel werken?&rdquo;</p>
-              <div className="space-y-4">
-                <div className="bg-white rounded-xl p-6 relative">
-                  <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-                  <p className="text-gray-700 italic pl-6">
-                    &ldquo;Ik loop er al zo lang mee. Hoe kan iemand het dan oplossen binnen een paar maanden? Maar het werkte.&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Marieke</p>
-                </div>
-                <div className="bg-white rounded-xl p-6 relative">
-                  <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-                  <p className="text-gray-700 italic pl-6">
-                    &ldquo;Je denkt: gaat dit het wel zijn? Zeker na een half jaar fysio. Maar in de loop der weken merkte ik: dit is het.&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Job, nek- en rugklachten</p>
-                </div>
-                <div className="bg-white rounded-xl p-6 relative">
-                  <QuoteIcon className="w-8 h-8 absolute top-4 left-4" />
-                  <p className="text-gray-700 italic pl-6">
-                    &ldquo;Ik heb misschien al honderd dingen geprobeerd. Maar voor mij is dit het laatste wat ik hoefde te proberen.&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-500 mt-2 pl-6 font-medium">Angelique</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-10">
-            <CTAButton onClick={openModal} variant="primary" location="twijfels-section">
-              Help me van mijn klachten af
-            </CTAButton>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: VOOR WIE IS DIT GESCHIKT? */}
-        {/* ================================================================ */}
-        <SectionWrapper>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Voor wie is dit geschikt?</h2>
-          </div>
-
-          <div className="space-y-6 max-w-lg mx-auto">
-            {/* Suitable */}
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 text-green-700">
-                <CheckIcon className="w-5 h-5" />
-                Wel geschikt als je...
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  'Terugkerende klachten hebt',
-                  'Klaar bent met pleisters plakken',
-                  'Bereid bent om zelf aan de slag te gaan',
-                  'Openstaat voor een eerlijk gesprek'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckIcon className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Not Suitable */}
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 text-gray-500">
-                <XIcon className="w-5 h-5" />
-                Niet geschikt als je...
-              </h3>
-              <ul className="space-y-3 text-gray-600">
-                {[
-                  'Acute pijn hebt en medische hulp nodig hebt',
-                  'Op zoek bent naar een snelle fix',
-                  'Een offici\u00eble diagnose verwacht'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <XIcon className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: VEELGESTELDE VRAGEN */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-gray-50">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Veelgestelde vragen</h2>
-          </div>
-
-          <div className="max-w-lg mx-auto">
-            <FAQItem
-              question="Is dit fysiotherapie?"
-              answer="Nee. We stellen geen medische diagnoses en behandelen niet. De Body-APK is een analyse die je helpt begrijpen wat er speelt."
-            />
-            <FAQItem
-              question="Wat is het verschil met een fysio?"
-              answer="Een fysio kijkt vaak naar de plek waar het pijn doet. Wij kijken naar hoe je hele lichaam beweegt: je houding, je looppatroon, je ademhaling. Alles op video en in foto's. Het doel is de oorzaak vinden, niet het symptoom behandelen."
-            />
-            <FAQItem
-              question="Wat als mijn fysio of arts zegt dat het niet te verhelpen is zonder operatie?"
-              answer="De Body-APK vervangt geen medisch advies. Maar we zien regelmatig dat mensen die te horen kregen dat bewegen niet zou helpen, toch grote stappen maken. We kijken op een andere manier naar je lichaam. Dat begint met de analyse."
-            />
-            <FAQItem
-              question="Heb ik een verwijzing nodig?"
-              answer="Nee. Je kunt direct een afspraak maken."
-            />
-            <FAQItem
-              question="Wat als ik niet kan rennen?"
-              answer={
-                <div className="space-y-3">
-                  <p>We passen de analyse aan op wat voor jou mogelijk is.</p>
-                  <p>Belangrijk: als je geen paar minuten pijnvrij kunt lopen, is de Body-APK waarschijnlijk nog niet de juiste stap.</p>
-                </div>
-              }
-            />
-            <FAQItem
-              question="Hoe bereid ik me voor?"
-              answer="Je ontvangt vooraf een korte vragenlijst. Neem sportkleding mee waarin je goed kunt bewegen."
-            />
-            <FAQItem
-              question="Waar vindt het plaats?"
-              answer="Bij CrossFit Leiden, Marie Diebenplaats 108, 2324 NG Leiden."
-            />
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* SECTION: AFSLUITENDE CTA */}
-        {/* ================================================================ */}
-        <SectionWrapper className="bg-black text-white">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">Klaar om te weten wat er speelt?</h2>
-
-            {/* Resultaten-strip */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
-              <div className="bg-white/10 rounded-lg p-4">
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Diana</span> kon geen 100 meter lopen. Nu doet ze 10.000 stappen per dag.
-                </p>
-              </div>
-              <div className="bg-white/10 rounded-lg p-4">
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Willem</span> was 3 maanden uit zijn werk. Nu is hij 100% klachtenvrij.
-                </p>
-              </div>
-              <div className="bg-white/10 rounded-lg p-4">
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Marieke</span> was 3 jaar lang elke ochtend stijf. Nu een half jaar pijnvrij.
-                </p>
-              </div>
-              <div className="bg-white/10 rounded-lg p-4">
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Angelique</span> had al honderd dingen geprobeerd. Dit was het laatste wat ze hoefde te proberen.
-                </p>
-              </div>
-            </div>
-
-            <CTAButton onClick={openModal} variant="white" className="text-lg" location="final-cta">
-              Help me van mijn klachten af
-            </CTAButton>
-            <p className="mt-4 text-sm text-gray-300">
-              We beginnen met een kort, vrijblijvend telefoongesprek.
-            </p>
-            <p className="mt-4 text-sm text-gray-400">
-              400+ leden bij CrossFit Leiden
-            </p>
-          </div>
-        </SectionWrapper>
-
-        {/* ================================================================ */}
-        {/* FOOTER */}
-        {/* ================================================================ */}
-        <footer className="bg-black text-white py-10 border-t border-gray-800">
-          <div className="max-w-3xl mx-auto px-6 text-center">
-            <p className="font-semibold text-lg mb-2">CrossFit Leiden</p>
-            <p className="text-gray-400 mb-6">Marie Diebenplaats 108, 2324 NG Leiden</p>
-
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
-              <a href="/privacy" className="hover:text-white transition-colors">
-                Privacyvoorwaarden
-              </a>
-              <span>&copy; {new Date().getFullYear()} CrossFit Leiden</span>
-            </div>
-          </div>
         </footer>
       </main>
     </>

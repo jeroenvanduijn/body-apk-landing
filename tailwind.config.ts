@@ -16,7 +16,8 @@ const config: Config = {
         'chinese-violet': '#7B6D8D', // Support accent
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'DM Sans', '-apple-system', 'sans-serif'],
+        heading: ['Sora', 'var(--font-dm-sans)', 'sans-serif'],
       },
       spacing: {
         '18': '4.5rem',
