@@ -114,7 +114,7 @@ export default function KennismakingPage() {
             </div>
             <div className="p-6">
               <iframe
-                src="https://links.gymops.nl/widget/booking/shoFMv6aUldZKsGsUxfm"
+                src="https://links.gymops.nl/widget/bookings/intro-call-body-apkv2"
                 style={{ width: '100%', minHeight: '900px', border: 'none', overflow: 'hidden' }}
                 scrolling="no"
                 id="hh0GVELEMQIRSCwsLFcf_1773475875294"
