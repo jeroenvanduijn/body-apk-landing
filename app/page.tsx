@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Script from 'next/script';
+import Link from 'next/link';
 
 // ============================================================================
 // TRACKING UTILITIES
@@ -503,13 +504,24 @@ export default function BodyAPKPage() {
             <p className="text-[17px] text-gray-600 max-w-[500px] mx-auto mb-8 leading-relaxed">
               De Body-APK laat je zien waar het echt vandaan komt. Geen giswerk. Geen standaard oefeningen. Wel antwoorden.
             </p>
-            <button
-              onClick={() => openModal('hero')}
+            <Link
+              href="/kennismaking"
+              onClick={() => trackCTAClick('hero')}
               className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
               style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
             >
               Ontdek of de Body-APK bij je past
-            </button>
+            </Link>
+            <p className="mt-4 text-sm text-gray-500">
+              Liever eerst meer informatie per mail?{' '}
+              <button
+                type="button"
+                onClick={() => openModal('hero-info')}
+                className="underline hover:text-gray-700 transition-colors"
+              >
+                Laat je gegevens achter
+              </button>
+            </p>
             <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-gray-600">
               <span className="flex items-center gap-1.5"><span className="text-[#0CBABA] font-bold">{'\u2713'}</span> Geen lidmaatschap nodig</span>
               <span className="flex items-center gap-1.5"><span className="text-[#0CBABA] font-bold">{'\u2713'}</span> Geen verplicht vervolg</span>
@@ -542,13 +554,14 @@ export default function BodyAPKPage() {
                 </li>
               ))}
             </ul>
-            <button
-              onClick={() => openModal('herken-je-dit')}
+            <Link
+              href="/kennismaking"
+              onClick={() => trackCTAClick('herken-je-dit')}
               className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
               style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
             >
               Ja, dit herken ik
-            </button>
+            </Link>
           </div>
         </section>
 
@@ -776,13 +789,14 @@ export default function BodyAPKPage() {
             </div>
 
             <div className="text-center mt-2">
-              <button
-                onClick={() => openModal('zo-werkt-het')}
+              <Link
+                href="/kennismaking"
+                onClick={() => trackCTAClick('zo-werkt-het')}
                 className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
                 style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
               >
                 Ontdek of de Body-APK bij je past
-              </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -821,14 +835,25 @@ export default function BodyAPKPage() {
             <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Diana</strong> kon geen 100 meter lopen. Nu doet ze 10.000 stappen per dag.</p>
             <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Willem</strong> was 3 maanden uit zijn werk. Nu 100% klachtenvrij.</p>
             <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Job</strong> kon niet achter zijn computer zitten. Nu pijnvrij.</p>
-            <button
-              onClick={() => openModal('final-cta')}
+            <Link
+              href="/kennismaking"
+              onClick={() => trackCTAClick('final-cta')}
               className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all mt-8"
               style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
             >
               Ontdek of de Body-APK bij je past
-            </button>
+            </Link>
             <p className="mt-4 text-sm text-gray-400">We beginnen met een kort, vrijblijvend telefoongesprek.</p>
+            <p className="mt-2 text-sm text-gray-400">
+              Liever eerst meer informatie per mail?{' '}
+              <button
+                type="button"
+                onClick={() => openModal('final-cta-info')}
+                className="underline hover:text-white transition-colors"
+              >
+                Laat je gegevens achter
+              </button>
+            </p>
           </div>
         </section>
 

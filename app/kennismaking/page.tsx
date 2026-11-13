@@ -72,7 +72,7 @@ export default function KennismakingPage() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-[#0CBABA]/10 text-[#0CBABA] px-4 py-2 rounded-full text-sm font-medium mb-6">
               <CheckIcon className="w-4 h-4" />
-              Stap 2 van 2
+              Gratis en vrijblijvend
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
