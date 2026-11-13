@@ -77,7 +77,11 @@ export default function RootLayout({
           />
         </noscript>
 
-        {/* Google Analytics / GA4 */}
+        {/* Google Analytics / GA4 + Google Ads.
+            De Ads-config zet de klik-cookie op .crossfitleiden.com, zodat de
+            conversie "Intro geboekt" op www.crossfitleiden.com/intro-geboekt
+            (waar de belagenda na een boeking naartoe stuurt) aan de juiste
+            advertentieklik wordt gekoppeld. Hier dus geen eigen conversie-event. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-FS179SBCT4"
           strategy="afterInteractive"
@@ -88,6 +92,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-FS179SBCT4');
+            gtag('config', 'AW-972965006');
           `}
         </Script>
 
