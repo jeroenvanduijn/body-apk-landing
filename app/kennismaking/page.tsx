@@ -1,7 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
+
+// ============================================================================
+// BOEKING METEN
+// ============================================================================
+// De agenda-widget (iframe van links.gymops.nl) stuurt na een geslaagde boeking
+// altijd het bericht ['msgsndr-booking-complete', {...}] naar deze pagina. Daarop
+// telt hier de Google Ads-conversie "Intro geboekt". Die staat in Google Ads op
+// een per klik, dus als de bedankpagina op www.crossfitleiden.com hem daarna ook
+// nog verstuurt, telt de boeking toch maar een keer.
+const BOOKING_WIDGET_ORIGIN = 'https://links.gymops.nl';
+const ADS_INTRO_GEBOEKT = 'AW-972965006/2A-xCK29kt4cEI6J-c8D';
 
 // ============================================================================
 // ICONS
@@ -36,6 +48,23 @@ const CheckIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 // ============================================================================
 
 export default function KennismakingPage() {
+  useEffect(() => {
+    let geteld = false;
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== BOOKING_WIDGET_ORIGIN) return;
+      if (!Array.isArray(e.data) || e.data[0] !== 'msgsndr-booking-complete') return;
+      if (geteld) return;
+      geteld = true;
+      // Geen gtag (bijv. geblokkeerd): dan gebeurt er niets, de boeking zelf staat er wel.
+      if (window.gtag) {
+        window.gtag('event', 'conversion', { send_to: ADS_INTRO_GEBOEKT });
+        window.gtag('event', 'intro_geboekt', { method: 'body_apk_agenda' });
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
   return (
     <>
       {/* HighLevel Calendar Script */}
