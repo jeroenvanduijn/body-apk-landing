@@ -176,7 +176,7 @@ export default function KennismakingPage() {
               </div>
 
               <div className="flex items-center gap-6 text-sm text-gray-400">
-                <a href="/privacy" className="hover:text-white transition-colors">
+                <a href="https://www.crossfitleiden.com/nl/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Privacyvoorwaarden
                 </a>
                 <span>© {new Date().getFullYear()} CrossFit Leiden</span>
