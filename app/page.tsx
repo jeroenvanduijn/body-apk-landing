@@ -153,6 +153,9 @@ const JariIntroVideo = () => {
   );
 };
 
+// Member Service WhatsApp (071 234 0477). Same number as /nl/member-service.
+const MEMBER_SERVICE_WHATSAPP = "https://wa.me/31712340477";
+
 // ============================================================================
 // WHATSAPP ICON
 // ============================================================================
@@ -406,7 +409,7 @@ const FormModal = ({
             <h3 className="font-heading text-[22px] font-bold mb-2">Top, je hoort van ons!</h3>
             <p className="text-[15px] text-gray-600">
               We sturen je meer informatie over de Body-APK. Heb je in de tussentijd vragen? Stuur ons een{' '}
-              <a href="https://wa.me/31712340285" className="text-[#EF4C37] font-semibold hover:underline" target="_blank" rel="noopener noreferrer">
+              <a href={MEMBER_SERVICE_WHATSAPP} className="text-[#EF4C37] font-semibold hover:underline" target="_blank" rel="noopener noreferrer">
                 WhatsApp-berichtje
               </a>.
             </p>
@@ -474,7 +477,7 @@ export default function BodyAPKPage() {
 
       {/* WhatsApp Float */}
       <a
-        href="https://wa.me/31712340285?text=Hoi%2C%20ik%20heb%20een%20vraag%20over%20de%20Body-APK%20voor%20rugpijn"
+        href={`${MEMBER_SERVICE_WHATSAPP}?text=Hoi%2C%20ik%20heb%20een%20vraag%20over%20de%20Body-APK%20voor%20rugpijn`}
         className="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center z-[100] hover:scale-110 transition-transform"
         style={{ boxShadow: '0 4px 20px rgba(37,211,102,0.4)' }}
         target="_blank"
