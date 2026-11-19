@@ -864,7 +864,7 @@ export default function BodyAPKPage() {
         <footer className="text-center py-8 px-5 text-[13px] text-gray-400">
           <p>CrossFit Leiden &middot; Marie Diebenplaats 108, 2324 NG Leiden</p>
           <p className="mt-2">
-            <a href="/privacy" className="text-gray-400 hover:text-gray-600 transition-colors">Privacyvoorwaarden</a>
+            <a href="https://www.crossfitleiden.com/nl/privacy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-600 transition-colors">Privacyvoorwaarden</a>
             {' '}&middot; &copy; {new Date().getFullYear()} CrossFit Leiden
           </p>
         </footer>
