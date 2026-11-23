@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
+import CookieSettingsButton from '@/components/CookieSettingsButton';
+import { measureOpenAI } from '@/components/OpenAIAdsPixel';
+import { safeFbq, safeGtag, safeHj } from '@/lib/track';
 
 // ============================================================================
 // TRACKING UTILITIES
@@ -26,14 +29,8 @@ interface VimeoPlayer {
 }
 
 const trackCTAClick = (location: string) => {
-  if (typeof window !== 'undefined') {
-    if (window.gtag) {
-      window.gtag('event', 'cta_click', { cta_location: location });
-    }
-    if (window.hj) {
-      window.hj('event', 'formulier_knop_geklikt');
-    }
-  }
+  safeGtag('event', 'cta_click', { cta_location: location });
+  safeHj('event', 'formulier_knop_geklikt');
 };
 
 // ============================================================================
@@ -48,9 +45,7 @@ const useVimeoTracking = (
   const progressMilestones = useRef(new Set<number>());
 
   const pushEvent = useCallback((event: string, extra?: Record<string, unknown>) => {
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', event, { video_id: videoId, video_title: videoTitle, ...extra });
-    }
+    safeGtag('event', event, { video_id: videoId, video_title: videoTitle, ...extra });
   }, [videoId, videoTitle]);
 
   useEffect(() => {
@@ -186,6 +181,7 @@ const FormModal = ({
   const [tijdstip, setTijdstip] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const leadMeasured = useRef(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -196,6 +192,7 @@ const FormModal = ({
       setTelefoon('');
       setTijdstip('');
       setError('');
+      leadMeasured.current = false;
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -227,17 +224,15 @@ const FormModal = ({
         })
       });
 
-      if (window.fbq) {
-        window.fbq('track', 'Lead', {
+      if (!leadMeasured.current) {
+        leadMeasured.current = true;
+        safeFbq('track', 'Lead', {
           content_name: 'Body-APK Rugpijn Info Request',
           content_category: 'rugpijn'
         });
-      }
-      if (window.gtag) {
-        window.gtag('event', 'generate_lead', { method: 'form_step1' });
-      }
-      if (window.hj) {
-        window.hj('event', 'variant_b_stap_1');
+        safeGtag('event', 'generate_lead', { method: 'form_step1' });
+        safeHj('event', 'variant_b_stap_1');
+        measureOpenAI('lead_created');
       }
 
       setStep(2);
@@ -270,9 +265,7 @@ const FormModal = ({
         })
       });
 
-      if (window.gtag) {
-        window.gtag('event', 'schedule_callback', { method: 'form_step2' });
-      }
+      safeGtag('event', 'schedule_callback', { method: 'form_step2' });
 
       setStep(3);
     } catch {
@@ -865,6 +858,8 @@ export default function BodyAPKPage() {
           <p>CrossFit Leiden &middot; Marie Diebenplaats 108, 2324 NG Leiden</p>
           <p className="mt-2">
             <a href="https://www.crossfitleiden.com/nl/privacy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-600 transition-colors">Privacyvoorwaarden</a>
+            {' '}&middot;{' '}
+            <CookieSettingsButton className="text-gray-400 hover:text-gray-600 transition-colors" />
             {' '}&middot; &copy; {new Date().getFullYear()} CrossFit Leiden
           </p>
         </footer>
