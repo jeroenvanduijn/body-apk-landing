@@ -3,6 +3,9 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
+import CookieSettingsButton from '@/components/CookieSettingsButton';
+import { measureOpenAI } from '@/components/OpenAIAdsPixel';
+import { safeGtag } from '@/lib/track';
 
 // ============================================================================
 // BOEKING METEN
@@ -55,11 +58,10 @@ export default function KennismakingPage() {
       if (!Array.isArray(e.data) || e.data[0] !== 'msgsndr-booking-complete') return;
       if (geteld) return;
       geteld = true;
-      // Geen gtag (bijv. geblokkeerd): dan gebeurt er niets, de boeking zelf staat er wel.
-      if (window.gtag) {
-        window.gtag('event', 'conversion', { send_to: ADS_INTRO_GEBOEKT });
-        window.gtag('event', 'intro_geboekt', { method: 'body_apk_agenda' });
-      }
+      // Geen gtag (geen toestemming of geblokkeerd): dan gebeurt er niets, de boeking zelf staat er wel.
+      safeGtag('event', 'conversion', { send_to: ADS_INTRO_GEBOEKT });
+      safeGtag('event', 'intro_geboekt', { method: 'body_apk_agenda' });
+      measureOpenAI('appointment_scheduled');
     };
     window.addEventListener('message', onMessage);
     return () => window.removeEventListener('message', onMessage);
@@ -179,6 +181,7 @@ export default function KennismakingPage() {
                 <a href="https://www.crossfitleiden.com/nl/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Privacyvoorwaarden
                 </a>
+                <CookieSettingsButton className="hover:text-white transition-colors" />
                 <span>© {new Date().getFullYear()} CrossFit Leiden</span>
               </div>
             </div>
