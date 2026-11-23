@@ -428,30 +428,24 @@ const stories = [
   {
     name: 'Diana (40)',
     location: 'Rijnsburg',
-    complaint: 'Dubbele hernia + verschoven wervel',
+    complaint: 'Langdurige rugklachten',
     videoId: '1176722336',
-    before: 'Kon geen 100 meter lopen. Niet staan koken. Niet met de kinderen weg. Het ziekenhuis zei: opereren. De onderste drie wervels vastzetten met schroeven en pennen. Diana vroeg of bewegen een optie was. Het antwoord: nee.',
-    transition: 'Na de Body-APK + Unlock Motion Small Group',
-    after: 'Loopt nu 10.000 stappen per dag. Hernia niet meer te zien op foto\u2019s. Verschoven wervel zit recht. Zonder operatie. Zonder schroeven.',
+    text: 'Kon geen 100 meter lopen, niet staan koken en niet met de kinderen weg. Na haar Body-APK en begeleiding bij Jari loopt ze nu weer 10.000 stappen per dag.',
     featured: true,
   },
   {
     name: 'Willem (56)',
     location: 'Katwijk',
-    complaint: 'Zenuwpijn in been',
+    complaint: 'Rug- en beenklachten',
     videoId: '1176722175',
-    before: 'Drie maanden uit zijn werk door zenuwpijn. Huisarts zei: rust.',
-    transition: 'Na een paar weken bij Jari',
-    after: 'Weer aan het werk. Nu 100% klachtenvrij.',
+    text: 'Zat drie maanden thuis en kon niet werken. Na zijn Body-APK en een paar weken begeleiding bij Jari is hij weer aan het werk.',
   },
   {
     name: 'Job (28)',
     location: 'Leiden',
     complaint: 'Nek- en rugklachten',
     videoId: '1176722201',
-    before: 'Brandweerman. Kon geen 20 minuten achter een computer zitten. Fysio en chiropractor hielpen alleen de dag erna.',
-    transition: 'Na de Body-APK',
-    after: 'Pijnvrij. Weet precies hoe hij zijn houding moet aanpassen.',
+    text: 'Brandweerman. Kon geen 20 minuten achter een computer zitten. Had al van alles geprobeerd, maar de klachten bleven terugkomen. Na de Body-APK weet hij precies hoe hij zijn houding moet aanpassen.',
   },
 ];
 
@@ -505,7 +499,7 @@ export default function BodyAPKPage() {
               Rugpijn die steeds <span className="text-[#EF4C37]">terugkomt?</span>
             </h1>
             <p className="text-[17px] text-gray-600 max-w-[500px] mx-auto mb-8 leading-relaxed">
-              De Body-APK laat je zien waar het echt vandaan komt. Geen giswerk. Geen standaard oefeningen. Wel antwoorden.
+              De Body-APK brengt in kaart hoe je beweegt, staat en ademt. Geen giswerk, geen standaard oefeningen, wel een helder plan.
             </p>
             <Link
               href="/kennismaking"
@@ -547,7 +541,6 @@ export default function BodyAPKPage() {
                 'Je kunt niet lang zitten of staan zonder pijn',
                 'Je bent al bij de fysio geweest, maar de klacht komt steeds terug',
                 'Je denkt: dit hoort vast bij het ouder worden',
-                'Je hebt misschien zelfs gehoord dat een operatie de enige oplossing is',
               ].map((item, i) => (
                 <li key={i} className="py-3.5 border-b border-gray-200 last:border-b-0 text-base text-gray-700 flex items-start gap-3 leading-relaxed">
                   <div className="flex-shrink-0 w-6 h-6 bg-[#EF4C37] rounded-full flex items-center justify-center mt-0.5">
@@ -574,7 +567,7 @@ export default function BodyAPKPage() {
             <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Zij hadden hetzelfde</p>
             <h2 className="font-heading font-bold leading-tight mb-8"
               style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
-              Rugpijn. Al van alles geprobeerd. Dit veranderde alles.
+              Rugklachten? Zo verging het anderen.
             </h2>
 
             {/* Story cards */}
@@ -598,12 +591,7 @@ export default function BodyAPKPage() {
                 <span className="inline-block bg-[#EF4C37]/[0.08] text-[#EF4C37] text-[13px] font-semibold px-3 py-1 rounded-full mb-3.5">
                   {s.complaint}
                 </span>
-                <p className="text-[15px] text-gray-700 leading-relaxed mb-3">{s.before}</p>
-                <div className="flex items-center gap-2 font-bold text-sm text-[#0CBABA] mb-3">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M8 14l4-4M8 14l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-                  {s.transition}
-                </div>
-                <p className="text-[15px] font-medium text-[#1a1a1a] leading-relaxed">{s.after}</p>
+                <p className="text-[15px] text-gray-700 leading-relaxed">{s.text}</p>
               </div>
             ))}
 
@@ -616,11 +604,10 @@ export default function BodyAPKPage() {
             </div>
 
             {/* More video testimonials */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
               {[
                 { name: 'Erica', location: 'Leiden', complaint: 'Heupblessure', videoId: '1176722280' },
-                { name: 'Marieke (30)', location: 'Leiden', complaint: 'Achillespees/kuit', videoId: '1176722373' },
-                { name: 'Angelique (40)', location: 'Leiderdorp', complaint: 'Pijn overal', videoId: '1176722243' },
+                { name: 'Angelique (40)', location: 'Leiderdorp', complaint: 'Langdurige klachten', videoId: '1176722243' },
               ].map((t, i) => (
                 <div key={i} className="bg-[#fafafa] rounded-xl overflow-hidden">
                   <VideoTestimonial videoId={t.videoId} title={`${t.name} - ${t.complaint}`} />
@@ -644,11 +631,10 @@ export default function BodyAPKPage() {
             </h2>
             <ul className="my-5">
               {[
-                'Fysiotherapie \u2014 even beter, daarna weer terug bij af',
-                'Chiropractor \u2014 helpt voor een dag, niet voor de lange termijn',
-                'Oefeningen van YouTube \u2014 maar je weet niet of je ze goed doet',
-                'Rust \u2014 maar zodra je weer beweegt is het terug',
-                'Misschien zelfs het advies: opereren',
+                'Behandelingen die tijdelijk verlichting gaven, maar daarna kwam de klacht weer terug.',
+                'Oefeningen van YouTube, terwijl je eigenlijk niet weet of je ze goed uitvoert.',
+                'Rust nemen, waarna je rug bij normaal bewegen toch weer opspeelt.',
+                'Alleen focussen op de pijnlijke plek, zonder naar je hele manier van bewegen te kijken.',
               ].map((item, i) => (
                 <li key={i} className="py-2.5 text-[15px] text-gray-700 flex items-start gap-2.5 leading-relaxed">
                   <span className="text-[#EF4C37] font-bold flex-shrink-0">{'\u2715'}</span>
@@ -656,7 +642,7 @@ export default function BodyAPKPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 font-medium text-base">De Body-APK is geen symptoombestrijding. We zoeken de oorzaak.</p>
+            <p className="mt-5 font-medium text-base">Met de Body-APK kijken we niet alleen naar de plek waar je last hebt, maar naar hoe je hele lichaam beweegt.</p>
           </div>
         </section>
 
@@ -669,7 +655,7 @@ export default function BodyAPKPage() {
               Wat is de Body-APK?
             </h2>
             <p className="text-base text-gray-700 mb-6 leading-relaxed">
-              Een diepgaande analyse van hoe je lichaam beweegt. Niet alleen waar het pijn doet, maar waarom het pijn doet.
+              Een diepgaande analyse van hoe je lichaam beweegt. Niet alleen waar je last hebt, maar hoe je hele lichaam beweegt.
             </p>
 
             <div className="grid grid-cols-1 gap-4 mb-8">
@@ -687,30 +673,19 @@ export default function BodyAPKPage() {
               ))}
             </div>
 
-            {/* Verschil met fysio */}
-            <h3 className="text-lg font-bold mt-8 mb-3">Verschil met een fysio</h3>
-            <div className="w-full overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th className="text-left text-[13px] uppercase tracking-wide text-gray-400 px-3 py-2.5 border-b-2 border-gray-200">Fysio</th>
-                    <th className="text-left text-[13px] uppercase tracking-wide text-gray-400 px-3 py-2.5 border-b-2 border-gray-200">Body-APK</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ['Kijkt naar waar het pijn doet', 'Kijkt naar hoe je hele lichaam beweegt'],
-                    ['Behandelt het symptoom', 'Zoekt de oorzaak'],
-                    ['Standaard protocol', 'Analyse op maat met video en foto'],
-                  ].map(([fysio, apk], i) => (
-                    <tr key={i}>
-                      <td className="px-3 py-3 text-[15px] border-b border-gray-100 text-gray-600 align-top leading-relaxed">{fysio}</td>
-                      <td className="px-3 py-3 text-[15px] border-b border-gray-100 font-medium align-top leading-relaxed">{apk}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <h3 className="font-heading text-lg font-bold mt-8 mb-4">Wat maakt de Body-APK anders?</h3>
+            <ul>
+              {[
+                'We kijken naar je hele lichaam: hoe je staat, loopt, ademt en compenseert.',
+                'Geen standaard lijstje oefeningen, maar een analyse op maat met slow-motion video en foto\'s.',
+                'Geen medische behandeling, wel een helder bewegingsplan. En is er toch fysiotherapie nodig, dan zitten we onder één dak met Fysiofabriek.',
+              ].map((item, i) => (
+                <li key={i} className="py-3.5 border-b border-gray-200 last:border-b-0 text-[15px] text-gray-700 flex items-start gap-3 leading-relaxed">
+                  <span className="text-[#0CBABA] font-bold flex-shrink-0">{'\u2713'}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -745,7 +720,7 @@ export default function BodyAPKPage() {
             <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#EF4C37] mb-3">Wat je krijgt</p>
             <h2 className="font-heading font-bold leading-tight mb-6"
               style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
-              Na de Body-APK weet je precies wat er speelt
+              Na de Body-APK weet je waar je aan kunt werken
             </h2>
 
             <div className="grid grid-cols-2 gap-3">
@@ -804,6 +779,60 @@ export default function BodyAPKPage() {
           </div>
         </section>
 
+        {/* ── Prijs ── */}
+        <section className="py-14">
+          <div className="max-w-[680px] mx-auto px-5">
+            <h2 className="font-heading font-bold leading-tight mb-6"
+              style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
+              Wat kost een Body-APK?
+            </h2>
+            <div className="rounded-xl border border-gray-200 bg-[#fafafa] p-7 md:p-8">
+              <p className="font-heading font-extrabold tracking-tight leading-none mb-5"
+                style={{ fontSize: 'clamp(32px, 6vw, 44px)' }}>
+                €220 <span className="text-[20px] font-semibold text-gray-500">eenmalig</span>
+              </p>
+              <p className="text-[15px] text-gray-700 leading-relaxed mb-5">
+                Je krijgt een uitgebreide houdings- en bewegingsanalyse van 60 tot 90 minuten met coach Jari, inclusief slow-motion beelden, houdingsfoto&apos;s en een samenvatting met concrete vervolgstappen.
+              </p>
+              <ul className="mb-5">
+                {[
+                  'Geen lidmaatschap nodig',
+                  'Geen verplicht vervolg',
+                  'Je begint altijd met een gratis belafspraak van 5 tot 10 minuten',
+                ].map((item) => (
+                  <li key={item} className="py-2 text-[15px] text-gray-700 flex items-start gap-2.5 leading-relaxed">
+                    <span className="text-[#0CBABA] font-bold flex-shrink-0">{'\u2713'}</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[15px] text-gray-600 leading-relaxed mb-6">
+                Wil je na je Body-APK verder trainen onder begeleiding, bijvoorbeeld in onze kleine groep Unlock Motion? Dan bespreekt Jari rustig wat past. Alle opties en prijzen staan op{' '}
+                <a
+                  href="https://www.crossfitleiden.com/nl/tarieven"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#EF4C37] font-semibold hover:underline"
+                >
+                  crossfitleiden.com/nl/tarieven
+                </a>
+                .
+              </p>
+              <Link
+                href="/kennismaking"
+                onClick={() => trackCTAClick('prijsblok')}
+                className="inline-block bg-[#EF4C37] text-white font-bold text-base px-9 py-4 rounded-full cursor-pointer hover:bg-[#d93d29] hover:-translate-y-px transition-all"
+                style={{ boxShadow: '0 4px 16px rgba(239,76,55,0.3)' }}
+              >
+                Plan je gratis belafspraak
+              </Link>
+              <p className="mt-4 text-sm text-gray-500">
+                5 tot 10 minuten telefonisch, gratis en vrijblijvend.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ── Twijfels ── */}
         <section className="py-14">
           <div className="max-w-[680px] mx-auto px-5">
@@ -814,9 +843,7 @@ export default function BodyAPKPage() {
             </h2>
 
             {[
-              { quote: 'Ik loop er al zo lang mee. Hoe kan iemand het dan oplossen binnen een paar maanden? Maar het werkte.', cite: 'Marieke, achillespees/kuit' },
               { quote: 'Je denkt: gaat dit het wel zijn? Zeker na een half jaar fysio. Maar in de loop der weken merkte ik: dit is het.', cite: 'Job, nek- en rugklachten' },
-              { quote: 'Ik heb goed over het prijskaartje nagedacht. Maar het is me al het geld waard, omdat ik nu weer pijnvrij alles kan doen.', cite: 'Marieke' },
             ].map((d, i) => (
               <div key={i} className="bg-[#fafafa] rounded-lg p-5 mb-3">
                 <blockquote className="text-[15px] italic text-gray-700 leading-relaxed mb-2">
@@ -833,11 +860,11 @@ export default function BodyAPKPage() {
           <div className="max-w-[680px] mx-auto px-5">
             <h2 className="font-heading font-bold leading-tight mb-6 text-white"
               style={{ fontSize: 'clamp(24px, 5.5vw, 32px)' }}>
-              Klaar om te weten waar je rugpijn vandaan komt?
+              Klaar om te zien hoe jouw lichaam beweegt?
             </h2>
-            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Diana</strong> kon geen 100 meter lopen. Nu doet ze 10.000 stappen per dag.</p>
-            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Willem</strong> was 3 maanden uit zijn werk. Nu 100% klachtenvrij.</p>
-            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Job</strong> kon niet achter zijn computer zitten. Nu pijnvrij.</p>
+            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Diana</strong> kon geen 100 meter lopen. Nu loopt ze weer 10.000 stappen per dag.</p>
+            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Willem</strong> zat 3 maanden thuis. Inmiddels is hij weer aan het werk.</p>
+            <p className="text-[15px] text-gray-400 mb-2 leading-relaxed"><strong className="text-white">Job</strong> kon geen 20 minuten achter zijn computer zitten. Na de Body-APK weet hij hoe hij zijn houding aanpast.</p>
             <Link
               href="/kennismaking"
               onClick={() => trackCTAClick('final-cta')}
@@ -862,7 +889,10 @@ export default function BodyAPKPage() {
 
         {/* ── Footer ── */}
         <footer className="text-center py-8 px-5 text-[13px] text-gray-400">
-          <p>CrossFit Leiden &middot; Marie Diebenplaats 108, 2324 NG Leiden</p>
+          <p className="max-w-[560px] mx-auto text-[12px] leading-relaxed">
+            De Body-APK is een houdings- en bewegingsanalyse, geen medische diagnose of behandeling. Twijfel je over je klachten? Overleg altijd met je huisarts of fysiotherapeut.
+          </p>
+          <p className="mt-4">CrossFit Leiden &middot; Marie Diebenplaats 108, 2324 NG Leiden</p>
           <p className="mt-2">
             <a href="https://www.crossfitleiden.com/nl/privacy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-600 transition-colors">Privacyvoorwaarden</a>
             {' '}&middot; &copy; {new Date().getFullYear()} CrossFit Leiden
